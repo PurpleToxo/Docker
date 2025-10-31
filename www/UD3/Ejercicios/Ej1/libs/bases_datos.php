@@ -8,8 +8,8 @@ function get_conexion(){
     return $conexion;
 }
 
-function select_DB($conexion,$nombre){
-    return $conexion ->select_db($nombre);
+function select_DB($conexion){
+   return $conexion ->select_db("tienda");
 }
 
 function ejecutar_consulta($conexion, $sql){
@@ -18,5 +18,13 @@ function ejecutar_consulta($conexion, $sql){
 }
 
 function create_table_user($conexion){
+    $sql="CREATE TABLE IF NOT EXISTs USUARIOS(
+    id INT (6) primary key auto_increment,
+    nombre varchar (50) not null, 
+    apellidos varchar(100) not null,
+    edad int(3) not null,
+    provincia varchar(20) not null
+    )";
 
+    $conexion->query($sql);
 }
