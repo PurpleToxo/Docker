@@ -8,6 +8,19 @@
     </head>
     <body>
     <hi>Formulario para inscripción de usuarios</hi>
-
+    <form>
+        <p>Nombre</p><br>
+        <input type="text" name="nombre" required><br>
+        <p>Apellidos</p><br>
+        <input type="text" name="apellidos" required><br>
+        <p>Edad</p><br>
+        <input type="number" name="edad" required><br>
+        <p>Provincia</p><br>
+        <select name="provincia" required>
+            <option value="Corunha">A Coruña>/option>
+            <option value="Pontevedra">Pontevedra</option>
+            <option value="Lugo">Lugo</option>
+            <option value="Ourense">Ourense</option>
+    </form>
     </body>
 </html>
