@@ -22,8 +22,13 @@ include_once("libs/bases_datos.php");
                 $edad=$_POST['edad'];
                 $provincia=$_POST['provincia'];
                 $mensaje="El usuario $nombre $apellidos de  $edad años de edad y de la provincia de  $provincia ha sido registrado con éxito.";
-            }
             
+
+            $conexion = get_conexion();
+            select_DB($conexion);
+            alta_usuario($conexion, $nombre, $apellidos, $edad, $provincia);
+            $conexion->close();
+            }
         ?>
         <h1>Formulario para inscripción de usuarios</h1>
 

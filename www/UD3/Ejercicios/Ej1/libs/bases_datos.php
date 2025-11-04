@@ -37,3 +37,9 @@ function create_user_table($conexion){
 
     ejecutar_consulta($conexion,$sql);
 }
+
+function alta_usuario($conexion, $nombre, $apellidos, $edad, $provincia){
+    $sql = $conexion->prepare("insert into USUARIOS (nombre, apellidos, edad, provincia) values (?,?,?,?)");
+    $sql -> bind_param("ssis", $nombre, $apellidos, $edad, $provincia);
+    return $sql->execute() or die ("Error al insertar usuario");
+}
