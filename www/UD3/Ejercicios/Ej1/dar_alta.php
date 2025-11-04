@@ -1,4 +1,9 @@
-    <!DOCTYPE html>
+<?php
+//include_once("libs/utiles.php");
+include_once("libs/bases_datos.php");
+?>
+
+<!DOCTYPE html>
 <html>
     <head>
         <title>Tienda ej 1</title>
@@ -8,8 +13,22 @@
         integrity="sha384-Zenh87qX5JnK2Jl0vWa8Ck2rdkQ2Bzep5IDxbcnCeuOxjzrPF/et3URy9Bv1WTRi" crossorigin="anonymous">
     </head>
     <body>
+
+        <?php
+            $mensaje = "";
+            if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['submit'])) {
+                $nombre = $_POST['nombre'];
+                $apellidos=$_POST['apellidos'];
+                $edad=$_POST['edad'];
+                $provincia=$_POST['provincia'];
+                $mensaje="El usuario $nombre $apellidos de  $edad años de edad y de la provincia de  $provincia ha sido registrado con éxito.";
+            }
+            
+        ?>
         <h1>Formulario para inscripción de usuarios</h1>
-        <form>
+
+        <?= $mensaje; ?>
+        <form method="post" action="<?php echo htmlspecialchars($_SERVER['PHP_SELF']) ;?>">
             <p>Nombre</p>
             <input type="text" name="nombre" required><br><br>
             <p>Apellidos</p>
@@ -22,6 +41,8 @@
                 <option value="Pontevedra">Pontevedra</option>
                 <option value="Lugo">Lugo</option>
                 <option value="Ourense">Ourense</option>
+            </select><br><br>
+            <input type="submit" name="submit" value="Enviar">
         </form>
     </body>
 </html>

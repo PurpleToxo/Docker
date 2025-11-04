@@ -12,7 +12,7 @@ function select_DB($conexion){
    return $conexion ->select_db("tienda");
 }
 
-function ejecutar_consulta($conexion, $sql){
+function ejecutar_consulta($conexion, $sql){        //que sentido tiene esta funcion si ya se comprueba y crea con la de abajo?
     $sql = "Create database if not exist ".$nombre;
     ejecutar_consulta($conexion, $sql);
 }
