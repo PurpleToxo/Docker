@@ -44,5 +44,9 @@ include_once("libs/bases_datos.php");
             </select><br><br>
             <input type="submit" name="submit" value="Enviar">
         </form>
+
+        <footer>
+            <a href="index.php" class="btn btn-secondary">Volver al inicio</a>
+        </footer>
     </body>
 </html>

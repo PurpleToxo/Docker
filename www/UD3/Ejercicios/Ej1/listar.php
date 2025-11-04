@@ -57,5 +57,10 @@ include_once("libs/bases_datos.php");
         ?>
         </tbody>
         </table>
+
+
+        <footer>
+            <a href="index.php" class="btn btn-secondary">Volver al inicio</a>
+        </footer>
     </body>
 </html>

@@ -7,24 +7,33 @@ function get_conexion(){
     }
     return $conexion;
 }
+function ejecutar_consulta($conexion, $sql){
+    $resultado = $conexion->query($sql);
+
+    if ($resultado == false){
+        die($conexion->error);
+    }
+    return $resultado;
+}
+
 
 function select_DB($conexion){
    return $conexion ->select_db("tienda");
 }
 
-function ejecutar_consulta($conexion, $sql){        //que sentido tiene esta funcion si ya se comprueba y crea con la de abajo?
-    $sql = "Create database if not exist ".$nombre;
+function crear_DB($conexion){  
+    $sql = "Create database if not exists tienda";
     ejecutar_consulta($conexion, $sql);
 }
 
-function create_table_user($conexion){
+function create_user_table($conexion){
     $sql="CREATE TABLE IF NOT EXISTs USUARIOS(
-    id INT (6) primary key auto_increment,
-    nombre varchar (50) not null, 
-    apellidos varchar(100) not null,
-    edad int(3) not null,
-    provincia varchar(20) not null
-    )";
+        id INT (6) primary key auto_increment,
+        nombre varchar (50) not null, 
+        apellidos varchar(100) not null,
+        edad int(3) not null,
+        provincia varchar(20) not null
+        )";
 
-    $conexion->query($sql);
+    ejecutar_consulta($conexion,$sql);
 }
