@@ -39,6 +39,7 @@ include "lib/utilidades.php";
 
 <?php
 $conexion = get_conexion();
+crear_DB($conexion);
 seleccionar_bd_tienda($conexion);
 
 $resultados = listar_usuarios($conexion);

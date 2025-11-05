@@ -43,3 +43,15 @@ function alta_usuario($conexion, $nombre, $apellidos, $edad, $provincia){
     $sql -> bind_param("ssis", $nombre, $apellidos, $edad, $provincia);
     return $sql->execute() or die ("Error al insertar usuario");
 }
+
+function editar_user($conexion, $id_user, $nombre, $apellidos, $edad, $provincia){
+    $sql="UPDATE USUARIOS SET nombre=?, apellidos=?, edad=?,provincia=? where id =?";
+    $sql->bind_param("ssis", $nombre, $apellidos, $edad, $provincia, $id_user);
+    return ejecutar_consulta($conexion,$sql);
+}
+
+function buscar_usuario($conexion, $id_user){
+    $sql="SELECT FROM USUARIOS WHERE id=?";
+    $sql->bind_param("i", $id_user);
+    return ejecutar_consulta($conexion,$sql);
+}

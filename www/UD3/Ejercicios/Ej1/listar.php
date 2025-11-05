@@ -27,7 +27,7 @@ include_once("libs/bases_datos.php");
             <tbody>
         <?php //insertamos el codigo php responsable de encontrar y gestionar la información de la base de datos
         $conexion = get_conexion(); //Guardamos en una variable la conexion a la base de datos
-        select_db($conexion);//Seleccionamos la base de datos con la que vamos a trabajar
+        select_DB($conexion);//Seleccionamos la base de datos con la que vamos a trabajar
         $sql="SELECT *FROM USUARIOS";//Guardamos en una variable la consulta SQL que queremos ejecutar
         $resultado = $conexion->query($sql);//Guardamos el resultado de aplicar la consulta a la base de datos
         if($resultado===false){
@@ -43,8 +43,10 @@ include_once("libs/bases_datos.php");
                     echo "<td>".htmlspecialchars($row['apellidos'])."</td>";
                     echo "<td>".htmlspecialchars($row['edad'])."</td>";
                     echo "<td>".htmlspecialchars($row['provincia'])."</td>";
-                    echo "<td><a href='editar.php?id=".$row['id']." class='btn btn-info' '>Editar</a></td>";
-                    echo "<td><a href='borrar.php?id=".$row['id']." class='btn btn-danger''>Borrar</a></td>";
+                    // Corregir atributos y comillas para que el id se pase correctamente en GET
+                    echo '<td><a href="editar.php?id=' . $row['id'] . '" class="btn btn-info">Editar</a></td>';
+                    echo '<td><a href="borrar.php?id=' . $row['id'] . '" class="btn btn-danger">Borrar</a></td>';
+
                     echo "</tr>";
                 }
                 $resultado->free();
