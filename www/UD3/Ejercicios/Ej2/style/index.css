@@ -18,6 +18,7 @@ main {
     flex: 1; /* ocupa el espacio disponible, pero no lo estira demasiado */
     padding: 20px; /* opcional, para separar del borde */
     text-align: center;
+    
 }
 
 /* Footer */
@@ -34,3 +35,23 @@ header {
     text-align: center;
     padding: 20px;
 }
+.form-container form {
+    display: flex;
+    flex-direction: column; /* pone los elementos en columna */
+    gap: 15px; /* espacio entre cada campo */
+    width: 300px; /* ancho opcional del formulario */
+}
+
+.form-container label {
+    font-weight: bold;
+    text-align: left;
+}
+
+.form-container input,
+.form-container select {
+    padding: 8px;
+    font-size: 16px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+}
+

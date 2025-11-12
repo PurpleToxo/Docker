@@ -61,6 +61,10 @@ function create_table_admin($connection){
     )";
 }
 
+function select_DB($connection){
+
+}
+
 function register_donante(){
 
 }
