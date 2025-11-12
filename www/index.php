@@ -8,6 +8,11 @@
         <?php
             echo "<h1>¡Bienvenido al módulo de DWCS 2025-26!</h1>";
         ?>
+        
+        <a href="UD3/Ejercicios/Ej1/index.php" class="btn btn-secondary">Ej 1</a>
+
+        <a href="UD3/Ejercicios/Ej2/index.php" class="btn btn-secondary">Ej 2</a>
+        
     </body>
 </html>
 

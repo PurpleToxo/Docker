@@ -50,6 +50,24 @@ function editar_user($conexion, $id_user, $nombre, $apellidos, $edad, $provincia
 }
 
 function buscar_usuario($conexion, $id_user){
-    $sql="SELECT id, nombre,apellidos,edad,provincia FROM USUARIOS WHERE id=$id_user";
-    return ejecutar_consulta($conexion,$sql);
+    $stmt = $conexion->prepare("SELECT id, nombre, apellidos, edad, provincia FROM USUARIOS WHERE id = ?");
+    if (!$stmt) {
+        error_log('Prepare failed (buscar_usuario): ' . $conexion->error);
+        return false;
+    }
+    $stmt->bind_param("i", $id_user);
+    if (!$stmt->execute()){
+        error_log('Execute failed (buscar_usuario): ' . $stmt->error);
+        $stmt->close();
+        return false;
+    }
+    $result = $stmt->get_result();
+    $stmt->close();
+    return $result;
+}
+
+function borrar_usuario($conexion, $id_user){
+    $sql ="DELETE FROM USUARIOS WHERE id = $id_user";
+    ejecutar_consulta($conexion,$sql);
+
 }
