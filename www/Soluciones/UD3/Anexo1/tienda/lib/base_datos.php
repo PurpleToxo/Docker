@@ -55,7 +55,7 @@ function listar_usuarios($conexion)
     return $resultado;
 }
  
-function get_usuario($conexion, $id)
+function get_usuario($conexion, $id_user)
 {
     $sql = "SELECT id, nombre, apellidos,edad, provincia
             FROM usuarios
@@ -65,11 +65,11 @@ function get_usuario($conexion, $id)
     return $resultado;
 }
 
-function editar_usuario($conexion, $id, $nombre, $apellidos, $edad, $provincia)
+function editar_usuario($conexion, $id_user, $nombre, $apellidos, $edad, $provincia)
 {
     $sql = "UPDATE usuarios
             SET nombre='$nombre' ,apellidos='$apellidos' ,edad='$edad',provincia='$provincia'
-            WHERE id=$id;";
+            WHERE id=$id_user;";
 
     $resultado = ejecutar_consulta($conexion, $sql);
     return $resultado;

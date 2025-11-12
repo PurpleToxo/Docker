@@ -22,8 +22,8 @@ if (isset($_POST["submit"])) {
     editar_usuario($conexion, $id_user, $nombre, $apellidos, $edad, $provincia);
     header("Location: listar.php");
 } else {
-    if (isset($_GET["id"])) {
-        $id_user = $_GET["id"];
+    if (isset($_GET['id'])) {
+        $id_user = $_GET['id'];
         
         $user = get_usuario($conexion, $id_user);
 
