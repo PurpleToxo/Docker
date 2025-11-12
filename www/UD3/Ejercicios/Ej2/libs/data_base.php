@@ -7,27 +7,38 @@ function getConnection(){
     $dbname='donacion';
 
     try{
-        $conPDO = new PDO("mysql:host=$servername;dbname=$dbname", $username,$password);
-        $conPDO -> setAttribute(PDO::ATTR_ERRMODE,PDO::ERRMODE_EXCEPTION);
+        $connection = new PDO("mysql:host=$servername;dbname=$dbname", $username,$password);
+        $connection -> setAttribute(PDO::ATTR_ERRMODE,PDO::ERRMODE_EXCEPTION);
         echo "Database connected successfully";
-        return $conPDO;
+        return $connection;
     } catch (PDOException $e){
         echo "Connection failed: " . $e->getMessage();
     }
 }
-function create_DB (){
+
+function exequteQuery($connection,$sql){
+    try{
+        $connection->query($sql);
+    }catch(PDOExeption $e){
+        echo $e->getMessage();
+    }
+}
+
+function create_DB ($connection){
+    $sql="CREATE DATABASE IF NOT EXISTS donacion";
+    exequteQuery($connection,$sql);
 
 }
 
-function create_table_donantes($conection){
+function create_table_donantes($connection){
 
 }
 
-function create_table_historico($conection){
+function create_table_historico($connection){
 
 }
 
-function create_table_admin($conection){
+function create_table_admin($connection){
 
 }
 
