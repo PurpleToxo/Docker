@@ -29,15 +29,6 @@ include_once("libs/bases_datos.php");
         <br>
         <a href="listar.php" class="btn btn-secondary">Listar usuarios</a>
         <br><br>
-
-        <h1>Modificar usuarios</h1>
-        <br>
-        <a href="editar.php" class="btn btn-info">Modificar usuarios</a>
-        <br><br>
-        <h1>Eliminar usuarios</h1>
-        <br>
-        <a href="borrar.php" class="btn btn-dark">Eliminar usuarios</a>
-        <br>
     
         <footer>
             <a href="index.php" class="btn btn-secondary">Volver al inicio</a>

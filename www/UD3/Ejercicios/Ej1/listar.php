@@ -1,5 +1,5 @@
 <?php
-include_once("libs/utiles.php");
+//include_once("libs/utiles.php");
 include_once("libs/bases_datos.php");
 ?>
 <!DOCTYPE html>
