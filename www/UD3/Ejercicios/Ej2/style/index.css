@@ -1,0 +1,36 @@
+/* estilos.css */
+
+/* Asegura que el html y body ocupen toda la pantalla */
+html, body {
+    height: 100%;
+    margin: 0;
+}
+
+/* Contenedor principal usando flex */
+body {
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh; /* altura completa de la ventana */
+}
+
+/* Contenido principal */
+main {
+    flex: 1; /* ocupa el espacio disponible, pero no lo estira demasiado */
+    padding: 20px; /* opcional, para separar del borde */
+    text-align: center;
+}
+
+/* Footer */
+footer {
+    background-color:  rgb(82, 9, 82);
+    color: white;
+    text-align: center;
+    padding: 20px;
+}
+
+header {
+    background-color: rgb(82, 9, 82);
+    color: white;
+    text-align: center;
+    padding: 20px;
+}
