@@ -16,17 +16,17 @@ function getConnection(){
     }
 }
 
-function exequteQuery($connection,$sql){
+function executeQuery($connection,$sql){
     try{
         $connection->query($sql);
-    }catch(PDOExeption $e){
+    }catch(PDOException $e){
         echo $e->getMessage();
     }
 }
 
 function create_DB ($connection){
-    $sql="CREATE DATABASE IF NOT EXISTS donacion";
-    exequteQuery($connection,$sql);
+    $sql="CREATE DATABASE IF NOT EXISTS DONACION";
+    executeQuery($connection,$sql);
 
 }
 
@@ -40,7 +40,7 @@ function create_table_donantes($connection){
     cod_postal int (5) not null,
     tlf int (9) not null
     )";
-    exequteQuery($connection,$sql);
+    executeQuery($connection,$sql);
 }
 
 function create_table_historico($connection){
@@ -51,7 +51,7 @@ function create_table_historico($connection){
     next_donation date generate always as (last_donation + interval 4 months) stored,
     foreign key (id_donante) references DONANTES(id)
     )";
-    exequteQuery($connection,$sql);
+    executeQuery($connection,$sql);
 }
 
 function create_table_admin($connection){
@@ -62,6 +62,8 @@ function create_table_admin($connection){
 }
 
 function select_DB($connection){
+    $sql="USE donacion";
+    executeQuery($connection, $sql);
 
 }
 

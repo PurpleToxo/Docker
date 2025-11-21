@@ -12,7 +12,15 @@ include_once("libs/data_base.php");
         <link rel="stylesheet" href="style/index.css">
     </head>
     <body>
-        <?php include_once ("style/header.html"); ?>
+        <?php include_once ("style/header.html");
+        $connection=getConnection();
+        create_DB($connection);
+        select_DB($connection);
+        create_table_admin($connection);
+        create_table_donantes($connection);
+        create_table_historico($connection);
+
+        ?>
         <main>
             <h3>Donacion de Sangre</h3>
 

@@ -19,8 +19,16 @@ include_once("libs/utils.php");
         <?php include_once ("style/header.html"); 
         $mensaje=""; 
         if($_SERVER['REQUEST_METHOD']==="POST" && isset($_POST['submit'])){
-           $connection = getConnection();
-           select_DB($connection);
+            $nombre= validate($_POST['name']);
+            $apellidos=validate($_POST['apellidos']);
+            $age=validate($_POST['age']);
+            $grp_sangre=validate($_POST['grp_sangre']);
+            $cod_postal=validate($_POST['cod_postal']);
+            $tlf=validate($_POST['tlf']);
+           
+           
+            $connection = getConnection();
+            select_DB($connection);
 
         }
 
@@ -30,7 +38,7 @@ include_once("libs/utils.php");
         <main>
             <div class="form-container">
                 <form method="post" action="<?php echo htmlspecialchars($_SERVER['PHP_SELF']);?>">
-                    <label for="nombre"> Nombre</label>
+                    <label for="name"> Nombre</label>
                     <input type="text" name="name" id="name">
 
                     <label for="apellidos">Apellidos</label>
