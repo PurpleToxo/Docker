@@ -16,7 +16,7 @@ function listaUsuarios()
 {
     try {
         $con = conectaPDO();
-        $stmt = $con->prepare('SELECT id, username, nombre, apellidos FROM usuarios');
+        $stmt = $con->prepare('SELECT id, username, nombre, apellidos, rol FROM usuarios');
         $stmt->execute();
 
         $result = $stmt->setFetchMode(PDO::FETCH_ASSOC);
@@ -63,15 +63,16 @@ function listaTareasPDO($id_usuario, $estado)
     
 }
 
-function nuevoUsuario($nombre, $apellidos, $username, $contrasena)
+function nuevoUsuario($nombre, $apellidos, $username, $contrasena, $rol)
 {
     try{
         $con = conectaPDO();
-        $stmt = $con->prepare("INSERT INTO usuarios (nombre, apellidos, username, contrasena) VALUES (:nombre, :apellidos, :username, :contrasena)");
+        $stmt = $con->prepare("INSERT INTO usuarios (nombre, apellidos, username, contrasena, rol) VALUES (:nombre, :apellidos, :username, :contrasena, :rol)");
         $stmt->bindParam(':nombre', $nombre);
         $stmt->bindParam(':apellidos', $apellidos);
         $stmt->bindParam(':username', $username);
         $stmt->bindParam(':contrasena', $contrasena);
+        $stmt->bindParam(':rol',$rol);
         $stmt->execute();
         
         $stmt->closeCursor();
@@ -88,11 +89,11 @@ function nuevoUsuario($nombre, $apellidos, $username, $contrasena)
     }
 }
 
-function actualizaUsuario($id, $nombre, $apellidos, $username, $contrasena)
+function actualizaUsuario($id, $nombre, $apellidos, $username, $contrasena, $rol)
 {
     try{
         $con = conectaPDO();
-        $sql = "UPDATE usuarios SET nombre = :nombre, apellidos = :apellidos, username = :username";
+        $sql = "UPDATE usuarios SET nombre = :nombre, apellidos = :apellidos, username = :username, rol = :rol";
 
         if (isset($contrasena))
         {
@@ -105,6 +106,7 @@ function actualizaUsuario($id, $nombre, $apellidos, $username, $contrasena)
         $stmt->bindParam(':nombre', $nombre);
         $stmt->bindParam(':apellidos', $apellidos);
         $stmt->bindParam(':username', $username);
+        $stmt->bindParam(':rol',$rol);
         if (isset($contrasena)) $stmt->bindParam(':contrasena', $contrasena);
         $stmt->bindParam(':id', $id);
 

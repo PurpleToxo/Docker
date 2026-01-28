@@ -33,6 +33,7 @@
                                 $nombre = $usuario['nombre'];
                                 $apellidos = $usuario['apellidos'];
                                 $username = $usuario['username'];
+                                $rol = $usuario['rol'];
                         ?>
                             <input type="hidden" name="id" value="<?php echo $id ?>">
                             <?php include_once('formUsuario.php'); ?>
@@ -40,6 +41,13 @@
                                 <label for="contrasena" class="form-label">Contraseña</label>
                                 <input type="password" class="form-control" id="contrasena" name="contrasena" >
                             </div>
+                            <div class="mb-3">
+                            <label for="rol" class="form-label">Rol</label>
+                            <select class="form-select" id="rol" name="rol" required>
+                                <option value="0" <?php if ($rol == 0) echo 'selected'; ?>>Usuario</option>
+                                <option value="1" <?php if ($rol == 1) echo 'selected'; ?>>Administrador</option>
+                            </select>
+                        </div>
                             <button type="submit" class="btn btn-primary">Actualizar</button>
                         <?php
                             }
