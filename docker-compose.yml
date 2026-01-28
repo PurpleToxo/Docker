@@ -13,6 +13,8 @@ services:
             - persistent:/var/lib/mysql
         networks:
             - default
+        env_file:
+            - .env
     www:
         build: .
         ports: 

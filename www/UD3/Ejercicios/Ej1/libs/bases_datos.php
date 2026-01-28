@@ -1,73 +1,75 @@
 <?php
 
-function get_conexion(){
-    $conexion = new mysqli('db','root','test');
-    if($conexion->connect_errno != null){
-        die("Fallo en la conexion: ".$conexion->connect_error." con número ".$conexion->connect_errno);
+function execute_query($connection, $sql){
+    $result = $connection->query($sql);
+    if($result == false){
+        die ("Error procesing query: " . $connection->error);
     }
-    return $conexion;
-}
-function ejecutar_consulta($conexion, $sql){
-    $resultado = $conexion->query($sql);
-
-    if ($resultado == false){
-        die($conexion->error);
-    }
-    return $resultado;
-}
-
-
-function select_DB($conexion){
-   return $conexion ->select_db("tienda");
-}
-
-function crear_DB($conexion){  
-    $sql = "Create database if not exists tienda";
-    ejecutar_consulta($conexion, $sql);
-}
-
-function create_user_table($conexion){
-    $sql="CREATE TABLE IF NOT EXISTs USUARIOS(
-        id INT (6) primary key auto_increment,
-        nombre varchar (50) not null, 
-        apellidos varchar(100) not null,
-        edad int(3) not null,
-        provincia varchar(20) not null
-        )";
-
-    ejecutar_consulta($conexion,$sql);
-}
-
-function alta_usuario($conexion, $nombre, $apellidos, $edad, $provincia){
-    $sql = $conexion->prepare("insert into USUARIOS (nombre, apellidos, edad, provincia) values (?,?,?,?)");
-    $sql -> bind_param("ssis", $nombre, $apellidos, $edad, $provincia);
-    return $sql->execute() or die ("Error al insertar usuario");
-}
-
-function editar_user($conexion, $id_user, $nombre, $apellidos, $edad, $provincia){
-    $sql="UPDATE USUARIOS SET nombre='$nombre', apellidos='$apellidos', edad='$edad',provincia='$provincia' where id =$id_user";
-    return ejecutar_consulta($conexion,$sql);
-}
-
-function buscar_usuario($conexion, $id_user){
-    $stmt = $conexion->prepare("SELECT id, nombre, apellidos, edad, provincia FROM USUARIOS WHERE id = ?");
-    if (!$stmt) {
-        error_log('Prepare failed (buscar_usuario): ' . $conexion->error);
-        return false;
-    }
-    $stmt->bind_param("i", $id_user);
-    if (!$stmt->execute()){
-        error_log('Execute failed (buscar_usuario): ' . $stmt->error);
-        $stmt->close();
-        return false;
-    }
-    $result = $stmt->get_result();
-    $stmt->close();
     return $result;
 }
 
-function borrar_usuario($conexion, $id_user){
-    $sql ="DELETE FROM USUARIOS WHERE id = $id_user";
-    ejecutar_consulta($conexion,$sql);
-
+function connection(){
+    $connection = new mysqli ('db', 'root','test');
+    if ($connection->connect_errno != null){
+        die("Ha fallao" . $connection->connect_error);
+    }
+    return $connection;
 }
+
+function create_DB($connection){
+    $sql ="CREATE DATABASE IF NOT EXISTS tienda";
+    $result = execute_query($connection,$sql); 
+    return $result;
+}
+
+function select_DB($connection){
+    $sql=" USE tienda";
+    $result = execute_query($connection,$sql); 
+    return $result;
+}
+
+function create_user_table($connection){
+    $sql="CREATE TABLE IF NOT EXISTS USERS(
+    id_user INT (6) auto_increment primary key,
+    nombre varchar(50) not null,
+    apellidos varchar(100) not null,
+    edad int (3) not null,
+    provincia varchar(50) not null
+    )";
+    execute_query($sql);
+}
+
+function list_users($connection){
+    $sql="SELECT * FROM  USERS";
+    $result = execute_query($connection,$sql); 
+    return $result;
+}
+
+function get_user($connection, $id_user){
+    $sql="SELECT * FROM USERS WHERE id_user=$id_user";
+    $result = execute_query($connection,$sql); 
+    return $result;
+}
+
+function edit_user($connection, $id_user,$nombre,$apellido,$edad,$provincia){
+    $sql="UPDATE USERS SET nombre='$nombre', apellidos='$apellido', edad=$edad, provincia='$provincia' WHERE id_user=$id_user";
+    $result = execute_query($connection,$sql); 
+    return $result;
+}
+
+function register_user($connection,$nombre,$apellido,$edad,$provincia){
+    $sql="INSERT INTO USERS (nombre, apellidos, edad, provincia) VALUES ('$nombre', '$apellido', $edad, '$provincia')";
+    $result = execute_query($connection,$sql); 
+    return $result;
+}
+
+function delete_user($connection, $id_user){
+    $sql="DELETE FROM USERS WHERE id_user=$id_user";
+    $result = execute_query($connection,$sql); 
+    return $result;
+}
+
+function close_connection($connection){
+    $connection->close();
+}
+?>

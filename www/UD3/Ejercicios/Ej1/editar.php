@@ -1,35 +1,34 @@
 <?php
-include_once("libs/bases_datos.php");
 
-$conexion=get_conexion();
-select_DB($conexion);
+include_once("/libs/bases_datos.php");
 
-$id_user=0;
+$conexion=connection();
+
+
+$mensaje="";
+$id_user="";
 $nombre="";
 $apellidos="";
-$edad=0;
-$provincia="corunha";
-$mensaje="";
+$edad="";
+$provincia="";
 
-if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST["submit"])) {
-    $id_user=$_POST["id"];
-    $nombre = $_POST["nombre"];
-    $apellidos=$_POST["apellidos"];
-    $edad=$_POST["edad"];
-    $provincia=$_POST["provincia"];
-    $mensaje="El usuario $nombre $apellidos de  $edad años de edad y de la provincia de  $provincia ha sido editado con éxito.";
-            
+if($_SERVER(['REQUEST_METHOD']==="POST" && isset($_POST['submit']))){
+    $nombre= validate($_POST['nombre']);
+    $apellidos= validate($_POST['apellidos']);
+    $edad= validate($_POST['edad']);  
+    $provincia= validate($_POST['provincia']);
 
-    editar_user($conexion, $id_user, $nombre, $apellidos, $edad, $provincia);
-} else {
-    if(isset($_GET["id"])){
-        
-        $id_user=$_GET["id"];
+    select_DB($conexion);
+    edit_user($conexion, $nombre, $apellidos, $edad, $provincia);
+    close_connection($connection);
 
-        $user = buscar_usuario($conexion, $id_user);
-        
-        if($user->num_rows >0){
-            $row=$user->fetch_assoc();
+
+}else{
+    if(isset($_GET['id'])){
+        $id_user=$_GET['id'];
+        $usuario= get_user($conexion,$id_user);
+        if($usuario->num_rows>0){
+            $row=$usuario->fetch_assoc();
             $id_user=$row['id'];
             $nombre=$row['nombre'];
             $apellidos=$row['apellidos'];
@@ -37,12 +36,12 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST["submit"])) {
             $provincia=$row['provincia'];
         }
     }else{
-            $id_user=0;
-            $nombre="";
-            $apellidos="";
-            $edad=0;
-            $provincia="corunha";
-        }
+        $id_user="";
+        $nombre="";
+        $apellidos="";
+        $edad="";
+        $provincia="";
+    }
 }
 
 ?>

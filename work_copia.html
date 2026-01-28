@@ -1,0 +1,486 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="" xml:lang="">
+<head>
+  <meta charset="utf-8" />
+  <meta name="generator" content="pandoc" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+  <title>work_copia</title>
+  <style>
+    html {
+      color: #1a1a1a;
+      background-color: #fdfdfd;
+    }
+    body {
+      margin: 0 auto;
+      max-width: 36em;
+      padding-left: 50px;
+      padding-right: 50px;
+      padding-top: 50px;
+      padding-bottom: 50px;
+      hyphens: auto;
+      overflow-wrap: break-word;
+      text-rendering: optimizeLegibility;
+      font-kerning: normal;
+    }
+    @media (max-width: 600px) {
+      body {
+        font-size: 0.9em;
+        padding: 12px;
+      }
+      h1 {
+        font-size: 1.8em;
+      }
+    }
+    @media print {
+      html {
+        background-color: white;
+      }
+      body {
+        background-color: transparent;
+        color: black;
+        font-size: 12pt;
+      }
+      p, h2, h3 {
+        orphans: 3;
+        widows: 3;
+      }
+      h2, h3, h4 {
+        page-break-after: avoid;
+      }
+    }
+    p {
+      margin: 1em 0;
+    }
+    a {
+      color: #1a1a1a;
+    }
+    a:visited {
+      color: #1a1a1a;
+    }
+    img {
+      max-width: 100%;
+    }
+    h1, h2, h3, h4, h5, h6 {
+      margin-top: 1.4em;
+    }
+    h5, h6 {
+      font-size: 1em;
+      font-style: italic;
+    }
+    h6 {
+      font-weight: normal;
+    }
+    ol, ul {
+      padding-left: 1.7em;
+      margin-top: 1em;
+    }
+    li > ol, li > ul {
+      margin-top: 0;
+    }
+    blockquote {
+      margin: 1em 0 1em 1.7em;
+      padding-left: 1em;
+      border-left: 2px solid #e6e6e6;
+      color: #606060;
+    }
+    code {
+      font-family: Menlo, Monaco, Consolas, 'Lucida Console', monospace;
+      font-size: 85%;
+      margin: 0;
+      hyphens: manual;
+    }
+    pre {
+      margin: 1em 0;
+      overflow: auto;
+    }
+    pre code {
+      padding: 0;
+      overflow: visible;
+      overflow-wrap: normal;
+    }
+    .sourceCode {
+     background-color: transparent;
+     overflow: visible;
+    }
+    hr {
+      background-color: #1a1a1a;
+      border: none;
+      height: 1px;
+      margin: 1em 0;
+    }
+    table {
+      margin: 1em 0;
+      border-collapse: collapse;
+      width: 100%;
+      overflow-x: auto;
+      display: block;
+      font-variant-numeric: lining-nums tabular-nums;
+    }
+    table caption {
+      margin-bottom: 0.75em;
+    }
+    tbody {
+      margin-top: 0.5em;
+      border-top: 1px solid #1a1a1a;
+      border-bottom: 1px solid #1a1a1a;
+    }
+    th {
+      border-top: 1px solid #1a1a1a;
+      padding: 0.25em 0.5em 0.25em 0.5em;
+    }
+    td {
+      padding: 0.125em 0.5em 0.25em 0.5em;
+    }
+    header {
+      margin-bottom: 4em;
+      text-align: center;
+    }
+    #TOC li {
+      list-style: none;
+    }
+    #TOC ul {
+      padding-left: 1.3em;
+    }
+    #TOC > ul {
+      padding-left: 0;
+    }
+    #TOC a:not(:hover) {
+      text-decoration: none;
+    }
+    code{white-space: pre-wrap;}
+    span.smallcaps{font-variant: small-caps;}
+    div.columns{display: flex; gap: min(4vw, 1.5em);}
+    div.column{flex: auto; overflow-x: auto;}
+    div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+    /* The extra [class] is a hack that increases specificity enough to
+       override a similar rule in reveal.js */
+    ul.task-list[class]{list-style: none;}
+    ul.task-list li input[type="checkbox"] {
+      font-size: inherit;
+      width: 0.8em;
+      margin: 0 0.8em 0.2em -1.6em;
+      vertical-align: middle;
+    }
+    .display.math{display: block; text-align: center; margin: 0.5rem auto;}
+    /* CSS for syntax highlighting */
+    pre > code.sourceCode { white-space: pre; position: relative; }
+    pre > code.sourceCode > span { line-height: 1.25; }
+    pre > code.sourceCode > span:empty { height: 1.2em; }
+    .sourceCode { overflow: visible; }
+    code.sourceCode > span { color: inherit; text-decoration: inherit; }
+    div.sourceCode { margin: 1em 0; }
+    pre.sourceCode { margin: 0; }
+    @media screen {
+    div.sourceCode { overflow: auto; }
+    }
+    @media print {
+    pre > code.sourceCode { white-space: pre-wrap; }
+    pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+    }
+    pre.numberSource code
+      { counter-reset: source-line 0; }
+    pre.numberSource code > span
+      { position: relative; left: -4em; counter-increment: source-line; }
+    pre.numberSource code > span > a:first-child::before
+      { content: counter(source-line);
+        position: relative; left: -1em; text-align: right; vertical-align: baseline;
+        border: none; display: inline-block;
+        -webkit-touch-callout: none; -webkit-user-select: none;
+        -khtml-user-select: none; -moz-user-select: none;
+        -ms-user-select: none; user-select: none;
+        padding: 0 4px; width: 4em;
+        color: #aaaaaa;
+      }
+    pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+    div.sourceCode
+      {   }
+    @media screen {
+    pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+    }
+    code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+    code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+    code span.at { color: #7d9029; } /* Attribute */
+    code span.bn { color: #40a070; } /* BaseN */
+    code span.bu { color: #008000; } /* BuiltIn */
+    code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+    code span.ch { color: #4070a0; } /* Char */
+    code span.cn { color: #880000; } /* Constant */
+    code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+    code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+    code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+    code span.dt { color: #902000; } /* DataType */
+    code span.dv { color: #40a070; } /* DecVal */
+    code span.er { color: #ff0000; font-weight: bold; } /* Error */
+    code span.ex { } /* Extension */
+    code span.fl { color: #40a070; } /* Float */
+    code span.fu { color: #06287e; } /* Function */
+    code span.im { color: #008000; font-weight: bold; } /* Import */
+    code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+    code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+    code span.op { color: #666666; } /* Operator */
+    code span.ot { color: #007020; } /* Other */
+    code span.pp { color: #bc7a00; } /* Preprocessor */
+    code span.sc { color: #4070a0; } /* SpecialChar */
+    code span.ss { color: #bb6688; } /* SpecialString */
+    code span.st { color: #4070a0; } /* String */
+    code span.va { color: #19177c; } /* Variable */
+    code span.vs { color: #4070a0; } /* VerbatimString */
+    code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+  </style>
+</head>
+<body>
+<h1 id="pdo">PDO</h1>
+<h2 id="base-de-datos">Base de datos</h2>
+<p>En un documento php dentro de la carptea de lib que luego debemos
+linkear en cada uno de los otros doc con un
+<code>Include_once("libs/data_base.php");</code></p>
+<h3 id="conexión">Conexión</h3>
+<p>Para abrir la conexión a través del método PDO es necesario
+establecer unas variables antes. En ellas se establecerá el nombre del
+servidor,el usuario y contraseña y el nombre de la base de datos.</p>
+<div class="sourceCode" id="cb1"><pre
+class="sourceCode php"><code class="sourceCode php"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>    <span class="va">$servername</span><span class="op">=</span><span class="st">&#39;db&#39;</span><span class="ot">;</span></span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>    <span class="va">$username</span><span class="op">=</span><span class="st">&#39;root&#39;</span><span class="ot">;</span></span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a>    <span class="va">$password</span><span class="op">=</span><span class="st">&#39;test&#39;</span><span class="ot">;</span></span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a>    <span class="va">$dbname</span><span class="op">=</span><span class="st">&#39;donacion&#39;</span><span class="ot">;</span></span></code></pre></div>
+<p>Una vez que esto se ha decidido, abrimos un try/catch para establecer
+la conexión y recoger el error en el caso de que suceda.</p>
+<div class="sourceCode" id="cb2"><pre
+class="sourceCode php"><code class="sourceCode php"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>    <span class="cf">try</span>{</span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>        <span class="va">$connection</span> <span class="op">=</span> <span class="kw">new</span> <span class="bu">PDO</span>(<span class="st">&quot;mysql:host=</span><span class="va">$servername</span><span class="st">;dbname=</span><span class="va">$dbname</span><span class="st">&quot;</span><span class="ot">,</span> <span class="va">$username</span><span class="ot">,</span><span class="va">$password</span>)<span class="ot">;</span></span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a>        <span class="va">$connection</span> -&gt; setAttribute(<span class="bu">PDO</span>::<span class="cn">ATTR_ERRMODE</span><span class="ot">,</span><span class="bu">PDO</span>::<span class="cn">ERRMODE_EXCEPTION</span>)<span class="ot">;</span></span>
+<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a>        <span class="kw">echo</span> <span class="st">&quot;Database connected successfully&quot;</span><span class="ot">;</span></span>
+<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a>        <span class="cf">return</span> <span class="va">$connection</span><span class="ot">;</span></span>
+<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a>    } <span class="cf">catch</span> (<span class="bu">PDOException</span> <span class="va">$e</span>){</span>
+<span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a>        <span class="kw">echo</span> <span class="st">&quot;Connection failed: &quot;</span> <span class="op">.</span> <span class="va">$e</span>-&gt;getMessage()<span class="ot">;</span></span>
+<span id="cb2-9"><a href="#cb2-9" aria-hidden="true" tabindex="-1"></a>    }</span></code></pre></div>
+<ul>
+<li><code>$connection</code> Es la variable que usaremos para poder
+trabajar en el resto de la función.</li>
+<li><code>new PDO</code> Es el indicador de que se abre una nueva
+conexión PDO.</li>
+<li><code>mysql</code> Indica el sistema de gestión de datos que se
+utilizará. A la que se alsiganarán las variables de antes para completar
+la información.</li>
+</ul>
+<p>Despues de esto le decimos como manejar errores:</p>
+<div class="sourceCode" id="cb3"><pre
+class="sourceCode php"><code class="sourceCode php"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a><span class="va">$connection</span> -&gt; setAttribute(<span class="bu">PDO</span>::<span class="cn">ATTR_ERRMODE</span><span class="ot">,</span><span class="bu">PDO</span>::<span class="cn">ERRMODE_EXCEPTION</span>)<span class="ot">;</span></span></code></pre></div>
+<ul>
+<li><code>setAttribute</code> Es el método por el cual podemos modificar
+los atributos de la concexión.</li>
+<li><code>PDO::ATTR_ERRMODE</code> Especifica el modo en que PDO
+manejará los errores.</li>
+<li><code>PDO::ERRMODE_EXCEPTION</code> Indica que PDO debe lanzar una
+excepción si ocurre un error.</li>
+</ul>
+<div class="sourceCode" id="cb4"><pre
+class="sourceCode php"><code class="sourceCode php"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a><span class="cf">return</span> <span class="va">$connection</span></span></code></pre></div>
+<p>Lo que devuelve la conexión en caso de ser positiva para proceder con
+la petición.</p>
+<h4 id="bloque-catch">Bloque catch</h4>
+<p>Se recupera la excepción con PDOException y se guarda en la variable
+<code>$e</code> y con echo imprimimos el mensaje a través de
+<code>getMessage()</code>.</p>
+<h3 id="crear-db">Crear DB</h3>
+<div class="sourceCode" id="cb5"><pre
+class="sourceCode php"><code class="sourceCode php"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="kw">function</span> create_DB (<span class="va">$connection</span>){</span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>    <span class="va">$sql</span><span class="op">=</span><span class="st">&quot;CREATE DATABASE IF NOT EXISTS DONACION&quot;</span><span class="ot">;</span></span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a>    executeQuery(<span class="va">$connection</span><span class="ot">,</span><span class="va">$sql</span>)<span class="ot">;</span></span>
+<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div>
+<p>Creamos la petición y la guardamos en una variable. Por último con la
+función creada por nosotros, le pasamos la concexion y la peticion se
+ejecuta. Esta estructura será ña utilizada en cualquiera de las otras
+peticiones a la DB.</p>
+<h3 id="ejecucion-de-petición">Ejecucion de petición</h3>
+<div class="sourceCode" id="cb6"><pre
+class="sourceCode php"><code class="sourceCode php"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="kw">function</span> executeQuery(<span class="va">$connection</span><span class="ot">,</span><span class="va">$sql</span>){</span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>    <span class="cf">try</span>{</span>
+<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a>        <span class="va">$connection</span>-&gt;query(<span class="va">$sql</span>)<span class="ot">;</span></span>
+<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a>    }<span class="cf">catch</span>(<span class="bu">PDOException</span> <span class="va">$e</span>){</span>
+<span id="cb6-5"><a href="#cb6-5" aria-hidden="true" tabindex="-1"></a>        <span class="kw">echo</span> <span class="va">$e</span>-&gt;getMessage()<span class="ot">;</span></span>
+<span id="cb6-6"><a href="#cb6-6" aria-hidden="true" tabindex="-1"></a>    }</span>
+<span id="cb6-7"><a href="#cb6-7" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div>
+<p>Debemos pasarle la variable con la conexión y petición y con
+<code>$connection-&gt;query($sql);</code> se ejecuta la peticion. Esto
+dentro de una estructura try/catch como la que se hizo antes.</p>
+<h2 id="procesado-en-las-páginas">Procesado en las páginas</h2>
+<p>La estructura que a de seguir en cada página en la que debamos
+interactuar con un formulario se divide la página en 2 secciones para el
+php.</p>
+<h3 id="creacion-en-el-server">Creacion en el server</h3>
+<p>En la página principal se debe crear la DB y las tablas, al menos la
+primera vez. Por lo que es omportante en las funciones encargadas de
+estas creaciones, poner un IF NOT EXISTS</p>
+<div class="sourceCode" id="cb7"><pre
+class="sourceCode php"><code class="sourceCode php"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="va">$connection</span><span class="op">=</span>getConnection()<span class="ot">;</span></span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>create_DB(<span class="va">$connection</span>)<span class="ot">;</span></span>
+<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a>select_DB(<span class="va">$connection</span>)<span class="ot">;</span></span>
+<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a>create_table_admin(<span class="va">$connection</span>)<span class="ot">;</span></span>
+<span id="cb7-5"><a href="#cb7-5" aria-hidden="true" tabindex="-1"></a>create_table_donantes(<span class="va">$connection</span>)<span class="ot">;</span></span>
+<span id="cb7-6"><a href="#cb7-6" aria-hidden="true" tabindex="-1"></a>create_table_historico(<span class="va">$connection</span>)<span class="ot">;</span></span></code></pre></div>
+<h3 id="retroalimentación">Retroalimentación</h3>
+<p>En cada formulario que tengamos que realizar se validar los datos
+antes de que se envien. Para ello, las primeras lineas en el body deben
+hacer referencia a esto:</p>
+<div class="sourceCode" id="cb8"><pre
+class="sourceCode php"><code class="sourceCode php"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="kw">&lt;?php</span> <span class="kw">include_once</span> (<span class="st">&quot;style/header.html&quot;</span>)<span class="ot">;</span> </span>
+<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a><span class="va">$mensaje</span><span class="op">=</span><span class="st">&quot;&quot;</span><span class="ot">;</span> </span>
+<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span>(<span class="va">$_SERVER</span>[<span class="st">&#39;REQUEST_METHOD&#39;</span>]<span class="op">===</span><span class="st">&quot;POST&quot;</span> <span class="op">&amp;&amp;</span> <span class="kw">isset</span>(<span class="va">$_POST</span>[<span class="st">&#39;submit&#39;</span>])){</span>
+<span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a>    <span class="va">$nombre</span><span class="op">=</span> validate(<span class="va">$_POST</span>[<span class="st">&#39;name&#39;</span>])<span class="ot">;</span></span>
+<span id="cb8-5"><a href="#cb8-5" aria-hidden="true" tabindex="-1"></a>    <span class="va">$apellidos</span><span class="op">=</span>validate(<span class="va">$_POST</span>[<span class="st">&#39;apellidos&#39;</span>])<span class="ot">;</span></span>
+<span id="cb8-6"><a href="#cb8-6" aria-hidden="true" tabindex="-1"></a>    <span class="va">$age</span><span class="op">=</span>validate(<span class="va">$_POST</span>[<span class="st">&#39;age&#39;</span>])<span class="ot">;</span></span>
+<span id="cb8-7"><a href="#cb8-7" aria-hidden="true" tabindex="-1"></a>    <span class="va">$grp_sangre</span><span class="op">=</span>validate(<span class="va">$_POST</span>[<span class="st">&#39;grp_sangre&#39;</span>])<span class="ot">;</span></span>
+<span id="cb8-8"><a href="#cb8-8" aria-hidden="true" tabindex="-1"></a>    <span class="va">$cod_postal</span><span class="op">=</span>validate(<span class="va">$_POST</span>[<span class="st">&#39;cod_postal&#39;</span>])<span class="ot">;</span></span>
+<span id="cb8-9"><a href="#cb8-9" aria-hidden="true" tabindex="-1"></a>    <span class="va">$tlf</span><span class="op">=</span>validate(<span class="va">$_POST</span>[<span class="st">&#39;tlf&#39;</span>])<span class="ot">;</span></span>
+<span id="cb8-10"><a href="#cb8-10" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb8-11"><a href="#cb8-11" aria-hidden="true" tabindex="-1"></a>    <span class="va">$connection</span> <span class="op">=</span> getConnection()<span class="ot">;</span></span>
+<span id="cb8-12"><a href="#cb8-12" aria-hidden="true" tabindex="-1"></a>    select_DB(<span class="va">$connection</span>)<span class="ot">;</span></span>
+<span id="cb8-13"><a href="#cb8-13" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div>
+<ul>
+<li>En el caso de querer incluir cualquier efecto estético como puede
+ser <code>include_once ("style/header.html");</code> debe realizarse
+antes también.</li>
+<li>Debemos checkear cuando carguemos la página si hay algo cargado con
+un if, lo normal es que en este momento este vacio. En el if filtramos
+por el tipo de formulario (get o post) y que se haya enviado.</li>
+</ul>
+<div class="sourceCode" id="cb9"><pre
+class="sourceCode php"><code class="sourceCode php"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span>(<span class="va">$_SERVER</span>[<span class="st">&#39;REQUEST_METHOD&#39;</span>]<span class="op">===</span><span class="st">&quot;POST&quot;</span> <span class="op">&amp;&amp;</span> <span class="kw">isset</span>(<span class="va">$_POST</span>[<span class="st">&#39;submit&#39;</span>]))</span></code></pre></div>
+<p>Para el primer paso(el tipo de formulario) usamos la variable
+<code>$_SERVER</code> para acceder al método de envio. Y con
+<code>isset($_POST)</code> sabemos si se ha activado el botón de
+submit.</p>
+<p>En el caso de entrar en el if procedemos a validar todos los campos
+que queramos. Para ello podemos crear otro documento con todas las
+validaciones (también en libs), en este caso debemos incluir ese
+documento (antes de cualquier código). Cada campo validado se guarda en
+una variable que se reconzca para poder pasar las a la DB.</p>
+<div class="sourceCode" id="cb10"><pre
+class="sourceCode php"><code class="sourceCode php"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="va">$conexion</span> <span class="op">=</span> get_conexion()<span class="ot">;</span></span>
+<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a>select_DB(<span class="va">$conexion</span>)<span class="ot">;</span></span>
+<span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a>alta_usuario(<span class="va">$conexion</span><span class="ot">,</span> <span class="va">$nombre</span><span class="ot">,</span> <span class="va">$apellidos</span><span class="ot">,</span> <span class="va">$edad</span><span class="ot">,</span> <span class="va">$provincia</span>)<span class="ot">;</span></span>
+<span id="cb10-4"><a href="#cb10-4" aria-hidden="true" tabindex="-1"></a><span class="va">$conexion</span>-&gt;close()<span class="ot">;</span></span></code></pre></div>
+<p>Primero abrimos conexión y la guardamos en la variable. Acto seguido
+llamamos a la funcion para conectarnos a la DB con esa conexión. Por
+último llamamos a la funcion que realice la peticion a la DB que
+busquemos, pasandole la conexion y los datos validados. Siempre cerrar
+la conexión a la base de datos, se puede hacer a través de una función o
+en cada documento.</p>
+<p>Una vez tengamos esta parte lista podremos empezar con el formulario.
+La parte de PHP de los formularios se centra en la primera línea, en la
+pripia etiqueta del Form.</p>
+<div class="sourceCode" id="cb11"><pre
+class="sourceCode php"><code class="sourceCode php"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="op">&lt;</span><span class="cn">F</span>orm method<span class="op">=</span><span class="st">&quot;post&quot;</span> action<span class="op">=</span><span class="st">&quot;&lt;?php echo htmlspecialchars(</span><span class="va">$_SERVER</span>[<span class="er">&#39;</span><span class="st">PHP_SELF&#39;]);?&gt;&quot;</span><span class="op">&gt;</span></span></code></pre></div>
+<p>En ella se indica el metodo por el que se va a enviar el formulario.
+En la segunda parte se referencia el donde se va a enviar. junto con
+<code>htmlspeciachars</code> para evitar problemas con código malicioso.
+y con la supervariable <code>$_SERVER</code>. # POO ## Base de datos En
+un documento php dentro de la carptea de lib que luego debemos linkear
+en cada uno de los otros doc con un
+<code>Include_once("libs/data_base.php");</code> ### Conexión</p>
+<div class="sourceCode" id="cb12"><pre
+class="sourceCode php"><code class="sourceCode php"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="kw">function</span> get_conexion(){</span>
+<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a>    <span class="va">$conexion</span> <span class="op">=</span> <span class="kw">new</span> <span class="bu">mysqli</span>(<span class="st">&#39;db&#39;</span><span class="ot">,</span><span class="st">&#39;root&#39;</span><span class="ot">,</span><span class="st">&#39;test&#39;</span>)<span class="ot">;</span></span>
+<span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span>(<span class="va">$conexion</span>-&gt;connect_errno <span class="op">!=</span> <span class="kw">null</span>){</span>
+<span id="cb12-4"><a href="#cb12-4" aria-hidden="true" tabindex="-1"></a>        <span class="cf">die</span>(<span class="st">&quot;Fallo en la conexion: &quot;</span><span class="op">.</span><span class="va">$conexion</span>-&gt;connect_error<span class="op">.</span><span class="st">&quot; con número &quot;</span><span class="op">.</span><span class="va">$conexion</span>-&gt;connect_errno)<span class="ot">;</span></span>
+<span id="cb12-5"><a href="#cb12-5" aria-hidden="true" tabindex="-1"></a>    }</span>
+<span id="cb12-6"><a href="#cb12-6" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> <span class="va">$conexion</span><span class="ot">;</span></span>
+<span id="cb12-7"><a href="#cb12-7" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div>
+<p>En la primera línea le indicamos el sistema que se usara
+<code>new mysql</code> y le pasamos la información de la DB (nombre,
+usuario y contraseña) <code>('db','root','test')</code>.</p>
+<p>En el caso de que devuleva desde la variable un error, debemos
+recogerlo y mostrarlo. Con un if, cuya condición sea que el error sea
+diferente a nulo, hacemos que imprima el mensage de error y que termine
+el evento usando <code>die</code>.</p>
+<div class="sourceCode" id="cb13"><pre
+class="sourceCode php"><code class="sourceCode php"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a>(<span class="va">$conexion</span>-&gt;connect_errno <span class="op">!=</span> <span class="kw">null</span>)</span></code></pre></div>
+<h3 id="crear-db-1">Crear DB</h3>
+<p>Para crear la DB debemos crear una función que pueda trabajar con las
+consultas a mysql. La estructura de esta función será usada para crear
+tablas, y otras consultas, solo cambiarán las variables que necesitan y
+la estructura interna.</p>
+<div class="sourceCode" id="cb14"><pre
+class="sourceCode php"><code class="sourceCode php"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a><span class="kw">function</span> crear_DB(<span class="va">$conexion</span>){  </span>
+<span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a>    <span class="va">$sql</span> <span class="op">=</span> <span class="st">&quot;Create database if not exists tienda&quot;</span><span class="ot">;</span></span>
+<span id="cb14-3"><a href="#cb14-3" aria-hidden="true" tabindex="-1"></a>    ejecutar_consulta(<span class="va">$conexion</span><span class="ot">,</span> <span class="va">$sql</span>)<span class="ot">;</span></span>
+<span id="cb14-4"><a href="#cb14-4" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div>
+<p>Para crear esta función debemos facilitarle la conexión que hemos
+creada anteriormente. Una vez dentro crearemos una variable con la
+consulta deseada y llamaremos a nuestra función para ejecutarla.</p>
+<h3 id="función-ejecutar-consultas">Función ejecutar consultas</h3>
+<div class="sourceCode" id="cb15"><pre
+class="sourceCode php"><code class="sourceCode php"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a><span class="kw">function</span> ejecutar_consulta(<span class="va">$conexion</span><span class="ot">,</span> <span class="va">$sql</span>){</span>
+<span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a>    <span class="va">$resultado</span> <span class="op">=</span> <span class="va">$conexion</span>-&gt;query(<span class="va">$sql</span>)<span class="ot">;</span></span>
+<span id="cb15-3"><a href="#cb15-3" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> (<span class="va">$resultado</span> <span class="op">==</span> <span class="kw">false</span>){</span>
+<span id="cb15-4"><a href="#cb15-4" aria-hidden="true" tabindex="-1"></a>        <span class="cf">die</span>(<span class="va">$conexion</span>-&gt;<span class="bu">error</span>)<span class="ot">;</span></span>
+<span id="cb15-5"><a href="#cb15-5" aria-hidden="true" tabindex="-1"></a>    }</span>
+<span id="cb15-6"><a href="#cb15-6" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> <span class="va">$resultado</span><span class="ot">;</span></span>
+<span id="cb15-7"><a href="#cb15-7" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div>
+<p>Es necesario pasar la consulta y la conexión. Con la conexión
+ejecutamos el método query, pasandole la consulta. Y para manejar los
+errores con un of nos aseguramos que el evento es igual a false debemos
+matar el proceso e imprimir el error.</p>
+<h2 id="procesado-en-las-páginas-1">Procesado en las páginas</h2>
+<h3 id="creacion-en-el-server-1">Creacion en el server</h3>
+<div class="sourceCode" id="cb16"><pre
+class="sourceCode php"><code class="sourceCode php"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a><span class="va">$conexion</span><span class="op">=</span>get_conexion()<span class="ot">;</span></span>
+<span id="cb16-2"><a href="#cb16-2" aria-hidden="true" tabindex="-1"></a>crear_DB(<span class="va">$conexion</span>)<span class="ot">;</span></span>
+<span id="cb16-3"><a href="#cb16-3" aria-hidden="true" tabindex="-1"></a>select_DB(<span class="va">$conexion</span>)<span class="ot">;</span></span>
+<span id="cb16-4"><a href="#cb16-4" aria-hidden="true" tabindex="-1"></a>create_user_table(<span class="va">$conexion</span>)<span class="ot">;</span></span></code></pre></div>
+<p>Parq iniciar la DB en el servidor debemos idicarselo en la primera
+página que se cargue. Es importante que en las funciones en las que la
+consulta implica la creación de estructuras, debemos asegurarnos de que
+especificamos el <code>IF NOT EXISTS</code> para que no creemos cada vez
+que iniciamos o nos alerte de error.</p>
+<h3 id="retroalimentación-1">Retroalimentación</h3>
+<p>Igual que PDO.</p>
+<h1 id="editar-db">Editar DB</h1>
+<p>En el caso de que queramos editar un elemtneo de nuestra base de
+datos, el usuario debe ver cargados los datos que ya tendríaos guardados
+para poder editarlos. En ese caso se añade una capa más de
+complejidad.</p>
+<p>Para prepar la página inicial debemos generar una estructura php
+antes del código html. Debemos indicar y guardar en una variable la
+conexión a la DB, asi como asignar variables vacias a todos los elements
+que debe mostrar y editar el usuario.</p>
+<p>Con una estructura if/else comprobamos si el usuario a mandado la
+informacion del registro. En el momento que se inicia esa pagina por
+primera vez esto va a ser negativo asi que saltará al else. Pero una vez
+editado si que entrará en esta parte que es exactamente la misma que la
+de añadir una persona (guardar en variables los valores validados) y se
+guardan con nuestra función de editar_user.</p>
+<p>¿Pero que pasa la primera vez que se carga la página? Al entrar al
+else se encuentra con este código:</p>
+<div class="sourceCode" id="cb17"><pre
+class="sourceCode php"><code class="sourceCode php"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span>(<span class="kw">isset</span>(<span class="va">$_GET</span>[<span class="st">&quot;id&quot;</span>])){</span>
+<span id="cb17-2"><a href="#cb17-2" aria-hidden="true" tabindex="-1"></a>    <span class="va">$id_user</span><span class="op">=</span><span class="va">$_GET</span>[<span class="st">&quot;id&quot;</span>]<span class="ot">;</span></span>
+<span id="cb17-3"><a href="#cb17-3" aria-hidden="true" tabindex="-1"></a>    <span class="va">$user</span> <span class="op">=</span> buscar_usuario(<span class="va">$conexion</span><span class="ot">,</span> <span class="va">$id_user</span>)<span class="ot">;</span></span>
+<span id="cb17-4"><a href="#cb17-4" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span>(<span class="va">$user</span>-&gt;num_rows <span class="op">&gt;</span><span class="dv">0</span>){</span>
+<span id="cb17-5"><a href="#cb17-5" aria-hidden="true" tabindex="-1"></a>        <span class="va">$row</span><span class="op">=</span><span class="va">$user</span>-&gt;fetch_assoc()<span class="ot">;</span></span>
+<span id="cb17-6"><a href="#cb17-6" aria-hidden="true" tabindex="-1"></a>        <span class="va">$id_user</span><span class="op">=</span><span class="va">$row</span>[<span class="st">&#39;id&#39;</span>]<span class="ot">;</span></span>
+<span id="cb17-7"><a href="#cb17-7" aria-hidden="true" tabindex="-1"></a>        <span class="va">$nombre</span><span class="op">=</span><span class="va">$row</span>[<span class="st">&#39;nombre&#39;</span>]<span class="ot">;</span></span>
+<span id="cb17-8"><a href="#cb17-8" aria-hidden="true" tabindex="-1"></a>        <span class="va">$apellidos</span><span class="op">=</span><span class="va">$row</span>[<span class="st">&#39;apellidos&#39;</span>]<span class="ot">;</span></span>
+<span id="cb17-9"><a href="#cb17-9" aria-hidden="true" tabindex="-1"></a>        <span class="va">$edad</span><span class="op">=</span><span class="va">$row</span>[<span class="st">&#39;edad&#39;</span>]<span class="ot">;</span></span>
+<span id="cb17-10"><a href="#cb17-10" aria-hidden="true" tabindex="-1"></a>        <span class="va">$provincia</span><span class="op">=</span><span class="va">$row</span>[<span class="st">&#39;provincia&#39;</span>]<span class="ot">;</span></span>
+<span id="cb17-11"><a href="#cb17-11" aria-hidden="true" tabindex="-1"></a>    }</span>
+<span id="cb17-12"><a href="#cb17-12" aria-hidden="true" tabindex="-1"></a>}<span class="cf">else</span>{</span>
+<span id="cb17-13"><a href="#cb17-13" aria-hidden="true" tabindex="-1"></a>    <span class="va">$id_user</span><span class="op">=</span><span class="dv">0</span><span class="ot">;</span></span>
+<span id="cb17-14"><a href="#cb17-14" aria-hidden="true" tabindex="-1"></a>    <span class="va">$nombre</span><span class="op">=</span><span class="st">&quot;&quot;</span><span class="ot">;</span></span>
+<span id="cb17-15"><a href="#cb17-15" aria-hidden="true" tabindex="-1"></a>    <span class="va">$apellidos</span><span class="op">=</span><span class="st">&quot;&quot;</span><span class="ot">;</span></span>
+<span id="cb17-16"><a href="#cb17-16" aria-hidden="true" tabindex="-1"></a>    <span class="va">$edad</span><span class="op">=</span><span class="dv">0</span><span class="ot">;</span></span>
+<span id="cb17-17"><a href="#cb17-17" aria-hidden="true" tabindex="-1"></a>    <span class="va">$provincia</span><span class="op">=</span><span class="st">&quot;corunha&quot;</span><span class="ot">;</span></span>
+<span id="cb17-18"><a href="#cb17-18" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div>
+<p>En esta sección el if interior se asegura de recibir (por GET), en
+caso positivo busca con nuestra función el usuario y lo asigna a una
+variable. Con fetch dividimos por filas y reasignamos las variables del
+principio.</p>
+<p>Por último, en el propio formulario en el apartado valor le asignamos
+el homónimo.</p>
+</body>
+</html>
