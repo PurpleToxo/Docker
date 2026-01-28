@@ -19,7 +19,7 @@
                     <h2>Iniciar sesión</h2>
                 </div>
                 <div class="container justify-content-between">
-                    <form class="mb-5 w-50">
+                    <form action="loginAuth.php" method="POST" class="mb-5 w-50">
                         <div class="mb-3">
                             <label for="username" class="form-label">Username</label>
                             <input type="text" class="form-control" id="username" name="username" required>
@@ -28,7 +28,7 @@
                             <label for="contrasena" class="form-label">Contraseña</label>
                             <input type="password" class="form-control" id="contrasena" name="contrasena" required>
                         </div>
-                        <button type="submit" class="btn btn-primary">Guardar</button>
+                        <button type="submit" class="btn btn-primary">Iniciar</button>
                     </form>
                 </div>
             </main>
