@@ -621,6 +621,35 @@ En el caso de querer eliminar la sesión con el fin de cerrarla o cambiarla debe
 	header("Location: index.php");
 ?>
 ```
+
+## Clases y objetos
+Los objetos son instancias de una clase, y las clases son estructuras base para la creación de objetos. Esta estructura básica tiene una serie de puntos obligatorios: Para empezar debe declararse como ```class``` y debe ser nombrada en mayuscula. Lo primero que encontramos en la clase son las variables que formarán el objeto (en este casonombre y color), para que no se pueda acceder a estas variables que forman la estructura basica de los ibjetos debemos usar los setters y getters. Estos permiten variar el valor de las variables pero no cambiar las propias variables, es decir, podemos variar el valor de la variable color, pero no eliminar la variable color de la estructura.
+
+```
+class Fruit {
+  // Propiedades
+  public $name;
+  public $color;
+
+  // Métodos
+  function setName($name) {
+    $this->name = $name;
+  }
+  function getName() {
+    return $this->name;
+  }
+}
+```
+Una vez generada la estrucura del objeto debemos crear el objeto, para ello debemos indicarlo ```$banana=new Fruit();``` y luego pasar los valores de ese objeto ```$banana->setName('Banana');```
+
+El acceso a estas variables se puede limitar tambien a mayores de ls setter y esque podemos generar variables que solo se usen en la propia clase. Estas limitaciones se pueden aplicar tambien a las funcinoes.
+
+- public: se puede acceder a la propiedad o método desde cualquier lugar. Esta es la opción por defecto.
+- protected: se puede acceder a la propiedad o método dentro de la clase y por clases derivadas de esa clase (herencia, por ejemplo).
+- private: Solo se puede acceder a la propiedad o método dentro de la clase.
+### $this & $instanceof
+```$this``` es usado cuando quieres acceder a una de las variables del propio objeto con el que estas trabajando. ```$this->name=$name```. En el caso de ```("x" instanceof "x")``` se utiliza para comprobar si un elemento es un objeto de una clase. 
+
 # Copiar
 
 ```
