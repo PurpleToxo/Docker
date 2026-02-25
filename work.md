@@ -611,7 +611,16 @@ if($_SERVER["REQUEST_METHOD"]=="POST"){
    }
 }
 ```
+En el caso de querer eliminar la sesión con el fin de cerrarla o cambiarla debemos destruirla
 
+```
+<?php
+	session_start();
+	$_SESSION = array();
+	session_destroy();	
+	header("Location: index.php");
+?>
+```
 # Copiar
 
 ```
