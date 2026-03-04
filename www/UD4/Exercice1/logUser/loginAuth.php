@@ -14,7 +14,8 @@ if ($usuarioEncontrado){
     $rol = $usuarioEncontrado['rol'];
     $id = $usuarioEncontrado['id'];
     session_start();
-    $_SESSION['usuario'] = $id;
+    $_SESSION['usuario'] = $usuario; 
+    $_SESSION['id']=$id;
     $_SESSION['rol']=$rol;
     header('Location: ../index.php');
     exit;
