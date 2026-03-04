@@ -1,3 +1,10 @@
+<?php
+session_start();
+$rol=0;
+if(isset($_SESSION['rol'])){
+    $rol=$_SESSION['rol'];
+}
+?>
 <!DOCTYPE html>
 <html lang="es">
 <head>
@@ -24,34 +31,28 @@
                     <?php
                         require_once('modelo/mysqli.php');
                         $resultado = creaDB();
-                        if ($resultado[0])
-                        {
+                        if ($resultado[0]){
                             echo '<div class="alert alert-success" role="alert">';
                         }
-                        else
-                        {
+                        else{
                             echo '<div class="alert alert-warning" role="alert">';
                         }
                         echo $resultado[1];
                         echo '</div>';
                         $resultado = createTablaUsuarios();
-                        if ($resultado[0])
-                        {
+                        if ($resultado[0]){
                             echo '<div class="alert alert-success" role="alert">';
                         }
-                        else
-                        {
+                        else{
                             echo '<div class="alert alert-warning" role="alert">';
                         }
                         echo $resultado[1];
                         echo '</div>';
                         $resultado = createTablaTareas();
-                        if ($resultado[0])
-                        {
+                        if ($resultado[0]){
                             echo '<div class="alert alert-success" role="alert">';
                         }
-                        else
-                        {
+                        else{
                             echo '<div class="alert alert-warning" role="alert">';
                         }
                         echo $resultado[1];

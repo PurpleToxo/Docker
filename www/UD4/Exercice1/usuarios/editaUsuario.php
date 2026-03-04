@@ -28,42 +28,36 @@
                         $apellidos = $_POST['apellidos'];
                         $username = $_POST['username'];
                         $contrasena = $_POST['contrasena'];
+                        $rol = $_POST['rol'];
                         $error = false;
                         //verificar nombre
-                        if (!validarCampoTexto($nombre))
-                        {
+                        if (!validarCampoTexto($nombre)) {
                             $error = true;
                             echo '<div class="alert alert-danger" role="alert">El campo nombre es obligatorio y debe contener al menos 3 caracteres.</div>';
                         }
                         //verificar apellidos
-                        if (!validarCampoTexto($apellidos))
-                        {
+                        if (!validarCampoTexto($apellidos)){
                             $error = true;
                             echo '<div class="alert alert-danger" role="alert">El campo apellidos es obligatorio y debe contener al menos 3 caracteres.</div>';
                         }
                         //verificar username
-                        if (!validarCampoTexto($username))
-                        {
+                        if (!validarCampoTexto($username)){
                             $error = true;
                             echo '<div class="alert alert-danger" role="alert">El campo username es obligatorio y debe contener al menos 3 caracteres.</div>';
                         }
                         //verificar contrasena
-                        if (!empty($contrasena) && !validaContrasena($contrasena))
-                        {
+                        if (!empty($contrasena) && !validaContrasena($contrasena)){
                             $error = true;
                             echo '<div class="alert alert-danger" role="alert">La contraseña debe ser compleja.</div>';
                         }
-                        if (!$error)
-                        {
+                        if (!$error){
                             require_once('../modelo/pdo.php');
                             if (empty($contrasena)) $contrasena = null;
-                            $resultado = actualizaUsuario($id, filtraCampo($nombre), filtraCampo($apellidos), filtraCampo($username), $contrasena);
-                            if ($resultado[0])
-                            {
+                            $resultado = actualizaUsuario($id, filtraCampo($nombre), filtraCampo($apellidos), filtraCampo($username), $contrasena, $rol);
+                            if ($resultado[0]){
                                 echo '<div class="alert alert-success" role="alert">Usuario actualizado correctamente.</div>';
                             }
-                            else
-                            {
+                            else {
                                 echo '<div class="alert alert-danger" role="alert">Ocurrió un error actualizando el usuario: ' . $resultado[1] . '</div>';
                             }
                         }

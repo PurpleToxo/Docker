@@ -23,28 +23,22 @@
                 <div class="container justify-content-between">
                     <?php
                         require_once('../modelo/pdo.php');
-                        if (!empty($_GET))
-                        {
+                        if (!empty($_GET)){
                             $id = $_GET['id'];
-                            if (!empty($id))
-                            {
+                            if (!empty($id)){
                                 $resultado = borraUsuario($id);
-                                if ($resultado[0])
-                                {
+                                if ($resultado[0]){
                                     echo '<div class="alert alert-success" role="alert">Usuario borrado correctamente.</div>';
                                 }
-                                else
-                                {
+                                else{
                                     echo '<div class="alert alert-danger" role="alert">No se pudo borrar el usuario.</div>';
                                 }
                             }
-                            else
-                            {
+                            else{
                                 echo '<div class="alert alert-danger" role="alert">No se pudo recuperar la información del usuario.</div>';
                             }
                         }
-                        else
-                        {
+                        else{
                             echo '<div class="alert alert-danger" role="alert">Debes acceder a través del listado de usuarios.</div>';
                         }
                     ?>
