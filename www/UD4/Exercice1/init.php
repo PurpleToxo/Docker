@@ -3,6 +3,8 @@ session_start();
 $rol=0;
 if(isset($_SESSION['rol'])){
     $rol=$_SESSION['rol'];
+}else{
+    header('Location: loging.php');
 }
 ?>
 <!DOCTYPE html>
