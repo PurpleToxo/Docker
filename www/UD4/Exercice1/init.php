@@ -1,11 +1,7 @@
 <?php
 session_start();
-$rol=0;
-if(isset($_SESSION['rol'])){
-    $rol=$_SESSION['rol'];
-}else{
-    header('Location: loging.php');
-    exit;
+if(!isset($_SESSION['rol'])){
+    $_SESSION['rol']=0;
 }
 ?>
 <!DOCTYPE html>

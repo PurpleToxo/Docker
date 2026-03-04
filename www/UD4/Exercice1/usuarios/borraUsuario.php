@@ -1,3 +1,7 @@
+<?php
+require_once('../logUser/adminAuth.php');
+?>
+
 <!DOCTYPE html>
 <html lang="es">
 <head>
