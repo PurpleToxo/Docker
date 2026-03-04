@@ -101,6 +101,31 @@ function createTablaTareas(){
         cerrarConexion($conexion);
     }
 }
+function createTablaFichero(){
+    $conexion =null;
+    try{
+        $conexion = conectaTareas();
+        if($conexion->connect_error){
+            return [false, $conexion->error];
+        }else{
+            $sqlCheck ="SHOW TABLES LIKE 'ficheros'";
+            $resultado = $conexion ->query($sqlCheck);
+            if ($resultado &&$resultado ->num_rows >0){
+                return[false, 'La tabla "ficheros" ya existia.'];
+            }
+            $sql = 'CREATE TABLE `ficheros` (`id` INT NOT NULL AUTO_INCREMENT, `nombre` VARCHAR(100) NOT NULL,`file` VARCHAR(250) NOT NULL, `descripcion` VARCHAR(250) NOT NULL, `id_tarea` INT,  PRIMARY KEY (`id`), FOREIGN KEY (`id_tarea`) REFERENCES `tareas`(`id`))';
+            if($conexion->query($sql)){
+                return[true,'Tabla creada correctamente.'];
+            }else{
+                return[false,'No se pudo crear la tabla "ficheros".'];
+            }
+        }
+    }catch(mysqli_sql_exception $e){
+        return [false, $e->getMessage()];
+    }finally{
+        cerrarConexion($conexion);
+    }
+}
 
 function listaTareas(){
     try {

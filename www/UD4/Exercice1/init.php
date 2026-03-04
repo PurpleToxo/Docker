@@ -56,6 +56,15 @@ if(!isset($_SESSION['rol'])){
                         }
                         echo $resultado[1];
                         echo '</div>';
+                        $resultado = createTablaFichero();
+                        if ($resultado[0]){
+                            echo '<div class="alert alert-success" role="alert">';
+                        }
+                        else{
+                            echo '<div class="alert alert-warning" role="alert">';
+                        }
+                        echo $resultado[1];
+                        echo '</div>';
                     ?>
                 </div>
             </main>
