@@ -61,6 +61,7 @@
                                             echo '<td>';
                                             echo '<a class="btn btn-sm btn-outline-success" href="editaTareaForm.php?id=' . $tarea['id'] . '" role="button">Editar</a>';
                                             echo '<a class="btn btn-sm btn-outline-danger ms-2" href="borraTarea.php?id=' . $tarea['id'] . '" role="button">Borrar</a>';
+                                            echo '<a class="btn btn-sm btn-outline-primary" href="Tarea.php?id=' . $tarea['id'] . '" role="button">Más información</a>';
                                             echo '</td>';
                                             echo '</tr>';
                                         }
