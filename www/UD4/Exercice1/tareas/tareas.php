@@ -24,21 +24,16 @@
                 <?php
 
                     $resultado = null;
-                    if (!empty($_GET))
-                    {
+                    if (!empty($_GET)){
                         $estado = isset($_GET['estado']) ? $_GET['estado'] : null;
-                        $id_usuario = $_GET['id_usuario'];
+                        $id_usuario = $_SESSION['id'];
                         require_once('../modelo/pdo.php');
                         $resultado = listaTareasPDO($id_usuario, $estado);
-                    }
-                    else
-                    {
+                    }else{
                         require_once('../modelo/mysqli.php');
                         $resultado = listaTareas();
                     }
-                    
-                    if ($resultado && $resultado[0])
-                    {
+                    if ($resultado && $resultado[0]){
                 ?>
                     <div class="table">
                         <table class="table table-sm table-striped table-hover">
@@ -55,10 +50,8 @@
                             <tbody>
                                 <?php
                                     $lista = $resultado[1];
-                                    if (count($lista) > 0)
-                                    {
-                                        foreach ($lista as $tarea)
-                                        {
+                                    if (count($lista) > 0){
+                                        foreach ($lista as $tarea){
                                             echo '<tr>';
                                             echo '<td>' . $tarea['id'] . '</td>';
                                             echo '<td>' . $tarea['titulo'] . '</td>';
@@ -71,9 +64,7 @@
                                             echo '</td>';
                                             echo '</tr>';
                                         }
-                                    }
-                                    else
-                                    {
+                                    }else{
                                         echo '<tr><td colspan="100">No hay tareas</td></tr>';
                                     }
                                 ?>
@@ -81,9 +72,7 @@
                         </table>
                     </div>
                 <?php
-                    }
-                    else
-                    {
+                    }else{
                         echo '<div class="alert alert-warning" role="alert">' . $resultado[1] . '</div>';
                     }
                 ?>

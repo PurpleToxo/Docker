@@ -26,7 +26,7 @@
                         require_once('../modelo/mysqli.php');
                         if (!empty($_GET))
                         {
-                            $id = $_GET['id'];
+                            $id = $_SESSION['id'];
                             $tarea = buscaTarea($id);
                             if (!empty($id) && $tarea)
                             {
