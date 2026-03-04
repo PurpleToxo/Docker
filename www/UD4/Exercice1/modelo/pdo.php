@@ -141,3 +141,21 @@ function buscaUsuario($id){
         $con = null;
     }
 }
+function buscaUsuarioPorNombre($nombre,$contrasena){
+    try {
+        $con = conectaPDO();
+        $stmt = $con->prepare('SELECT * FROM usuarios WHERE nombre = ' . $nombre . ' AND contrasena = ' . $contrasena);
+        $stmt->execute();
+        $stmt->setFetchMode(PDO::FETCH_ASSOC);
+
+        if ($stmt->rowCount() == 1){
+            return $stmt->fetch();
+        }else{
+            return null;
+        }
+    }catch (PDOExcetion $e){
+        return null;
+    }finally{
+        $con = null;
+    }
+}

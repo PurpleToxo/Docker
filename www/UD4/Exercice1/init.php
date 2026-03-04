@@ -5,6 +5,7 @@ if(isset($_SESSION['rol'])){
     $rol=$_SESSION['rol'];
 }else{
     header('Location: loging.php');
+    exit;
 }
 ?>
 <!DOCTYPE html>
