@@ -150,7 +150,26 @@ function listaTareas(){
         cerrarConexion($conexion);
     }
 }
+function nuevoFichero($nombre, $file, $descripcion, $id_tarea){
+    try{
+        $conexion = conectaTareas();
+        
+        if ($conexion->connect_error){
+            return [false, $conexion->error];
+        }else{
+            $stmt = $conexion->prepare("INSERT INTO ficheros (nombre, file, descripcion, id_tarea) VALUES (?,?,?,?)");
+            $stmt->bind_param("ssss", $nombre, $file, $descripcion, $id_tarea);
 
+            $stmt->execute();
+
+            return [true, 'Fichero creado correctamente.'];
+        }
+    }catch (mysqli_sql_exception $e){
+        return [false, $e->getMessage()];
+    }finally{
+        cerrarConexion($conexion);
+    }
+}
 function nuevaTarea($titulo, $descripcion, $estado, $usuario){
     try{
         $conexion = conectaTareas();
