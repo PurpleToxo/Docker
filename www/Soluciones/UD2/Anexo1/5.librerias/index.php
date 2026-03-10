@@ -4,7 +4,7 @@
         <meta charset="utf-8">
         <link href="style.css" rel="stylesheet" type="text/css" media="screen" />
     </head>
-    <body>
+    <body class="<?php echo ($tema=='dark') ? 'bg-dark text-white' : 'bg-light text-dark'; ?>">
         <div id="header" class="container">
             
             <?php

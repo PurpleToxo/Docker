@@ -15,7 +15,7 @@ include_once("libs/utils.php");
         <link rel="stylesheet" href="style/index.css">
         
     </head>
-    <body>
+    <body class="<?php echo ($tema=='dark') ? 'bg-dark text-white' : 'bg-light text-dark'; ?>">
         <?php include_once ("style/header.html"); 
         $mensaje=""; 
         if($_SERVER['REQUEST_METHOD']==="POST" && isset($_POST['submit'])){

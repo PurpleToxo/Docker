@@ -11,7 +11,7 @@ include_once("libs/data_base.php");
             integrity="sha384-Zenh87qX5JnK2Jl0vWa8Ck2rdkQ2Bzep5IDxbcnCeuOxjzrPF/et3URy9Bv1WTRi" crossorigin="anonymous">
         <link rel="stylesheet" href="style/index.css">
     </head>
-    <body>
+    <body class="<?php echo ($tema=='dark') ? 'bg-dark text-white' : 'bg-light text-dark'; ?>">
         <?php include_once ("style/header.html");
         $connection=getConnection();
         create_DB($connection);

@@ -6,7 +6,7 @@
     <title>UD3 (Anexo 2)</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3/dist/css/bootstrap.min.css" rel="stylesheet">
 </head>
-<body>
+<body class="<?php echo ($tema=='dark') ? 'bg-dark text-white' : 'bg-light text-dark'; ?>">
 
     <?php include_once('vista/header.php'); ?>
 

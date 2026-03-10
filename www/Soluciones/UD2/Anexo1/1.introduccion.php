@@ -4,7 +4,7 @@
         <meta charset="utf-8">
         <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">
     </head>
-    <body>
+    <body class="<?php echo ($tema=='dark') ? 'bg-dark text-white' : 'bg-light text-dark'; ?>">
         <div class="container-fluid">
             <h1>Anexo 1. Introduccion</h1>
             <br />

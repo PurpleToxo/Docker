@@ -246,7 +246,7 @@ Para iniciar una sesión se requiere la sentencia ```session_start();```. En el 
 ?>
 <!DOCTYPE html>
 <html>
-  <body>
+  <body class="<?php echo ($tema=='dark') ? 'bg-dark text-white' : 'bg-light text-dark'; ?>">
   <?php
   // Establecer variables de sesión 
   $_SESSION["favcolor"] = "verde";
@@ -265,7 +265,7 @@ A la hora de acceder a la sesión debemos referir al nombre, pero siempre indica
 ?>
 <!DOCTYPE html>
 <html>
-  <body>
+  <body class="<?php echo ($tema=='dark') ? 'bg-dark text-white' : 'bg-light text-dark'; ?>">
   <?php
   // Echo session variables that were set on previous page
   echo "El color favorito es: " . $_SESSION["favcolor"] . ".<br>";
@@ -324,7 +324,7 @@ Para poder recuperar una cookie debemos usar la variable global ```$_COOKIE``` .
   setcookie($cookie_name, $cookie_value, time() + (86400 * 30), "/"); // 86400 = 1 day
 ?>
 <html>
-  <body>
+  <body class="<?php echo ($tema=='dark') ? 'bg-dark text-white' : 'bg-light text-dark'; ?>">
     <?php
     if(!isset($_COOKIE[$cookie_name])) {
         echo "La cookie con nombre '" . $cookie_name . "' no está definida!";

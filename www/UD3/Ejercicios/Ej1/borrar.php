@@ -20,7 +20,7 @@ if(isset($_GET["id"])){
         <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css" rel="stylesheet"
         integrity="sha384-Zenh87qX5JnK2Jl0vWa8Ck2rdkQ2Bzep5IDxbcnCeuOxjzrPF/et3URy9Bv1WTRi" crossorigin="anonymous">
     </head>
-    <body>
+    <body class="<?php echo ($tema=='dark') ? 'bg-dark text-white' : 'bg-light text-dark'; ?>">
         <?= $mensaje ?>
         <footer>
             <a href="index.php" class="btn btn-secondary">Volver al inicio</a>
