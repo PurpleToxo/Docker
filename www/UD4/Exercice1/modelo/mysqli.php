@@ -126,7 +126,42 @@ function createTablaFichero(){
         cerrarConexion($conexion);
     }
 }
+function listarFich($id_tarea){
+    $conexion = conectaTareas();
 
+    if ($conexion->connect_error){
+        return [false, $conexion->error];
+    }else{
+        $sql = "SELECT * FROM ficheros WHERE id_tarea = " . $id_tarea;
+        $resultados = $conexion->query($sql);
+        if ($resultados->num_rows == 1){
+            return $resultados->fetch_assoc();
+        }else{
+            return null;
+        }
+    }    
+}
+
+function borrarFicheros($id){
+    try{
+        $conexion = conectaTareas();
+
+        if ($conexion->connect_error){
+            return [false, $conexion->error];
+        }else{
+            $sql = "DELETE FROM fichero WHERE id = " . $id;
+            if ($conexion->query($sql)){
+                return [true, 'Fichero borrado correctamente.'];
+            }else{
+                return [false, 'No se pudo borrar el fichero.'];
+            } 
+        } 
+    }catch (mysqli_sql_exception $e){
+        return [false, $e->getMessage()];
+    }finally{
+        cerrarConexion($conexion);
+    }
+}
 function listaTareas(){
     try {
         $conexion = conectaTareas();
