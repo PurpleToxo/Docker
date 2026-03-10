@@ -33,5 +33,13 @@ class Tarea{
     function getIdUsuario(){
         return $this->id_usuario;
     }
+    function __construct($titulo, $descripcion, $estado, $id_usuario){
+        $this->titulo=$titulo;
+        $this->descripcion=$descripcion;
+        $this->estado=$estado;
+        $this->id_usuario=$id_usuario;
+    }
+
+
 
 }   
