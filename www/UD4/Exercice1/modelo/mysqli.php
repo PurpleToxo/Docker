@@ -157,7 +157,7 @@ function borrarFicheros(Fichero $fichero){
             } 
         } 
     }catch (mysqli_sql_exception $e){
-        return [false, $e->getMessage()];
+        throw new DatabaseException($e->getMessage(), $e->getMethod(),$e->getSql(), $e->getCode());
     }finally{
         cerrarConexion($conexion);
     }
@@ -205,7 +205,7 @@ function nuevoFichero(Fichero $fichero){
             return [true, 'Fichero creado correctamente.'];
         }
     }catch (mysqli_sql_exception $e){
-        return [false, $e->getMessage()];
+        throw new DatabaseException($e->getMessage(), $e->getMethod(),$e->getSql(), $e->getCode());
     }finally{
         cerrarConexion($conexion);
     }
