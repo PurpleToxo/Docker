@@ -19,14 +19,14 @@ function getConnection(){
 
 function create_DB ($connection){
     $sql="CREATE DATABASE IF NOT EXISTS DONACION";
-    executeQuery($connection,$sql);
-
+    $stmt=$connection->prepare($sql);
+    $stmt->execute();
 }
 
 function select_DB($connection){
     $sql="USE donacion";
-    executeQuery($connection, $sql);
-
+    $stmt=$connection->prepare($sql);
+    $stmt->execute();
 }
 
 function create_table_donantes($connection){
