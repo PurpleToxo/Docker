@@ -63,18 +63,47 @@ function create_DB ($connection){
 Creamos la petición y la guardamos en una variable. Por último con la función creada por nosotros, le pasamos la concexion y la peticion se ejecuta.
 Esta estructura será ña utilizada en cualquiera de las otras peticiones a la DB.
 
-### Ejecucion de petición
 
+### CRUD
+#### INSERT
+Preparamos el sql con una consulta preparada, tras esto pasamos al stmt para preparar la conexion y el sql. Por último el stmt ejecuta con los parametros que necesitemos pasarle.
 ```php
-function executeQuery($connection,$sql){
-    try{
-        $connection->query($sql);
-    }catch(PDOException $e){
-        echo $e->getMessage();
-    }
+function register_donante($connection,$nombre, $apellido,$edad,$grp_sangre,$cod_postal,$tlf){
+    $sql="INSERT INTO DONANTES(nombre,apellido,edad,grp_sangre,cod_postal,tlf) VALUES(?,?,?,?,?,?)";
+    $stmt=$connection->prepare($sql);
+    $stmt->execute([$nombre,$apellido,$edad,$grp_sangre,$cod_postal,$tlf]);
 }
 ```
-Debemos pasarle la variable con la conexión y petición y con ```$connection->query($sql);``` se ejecuta la peticion. Esto dentro de una estructura try/catch como la que se hizo antes.
+#### SELECT
+Para mostrar la informacion partimos de una situación similar al INSERT. Solo que al ejecutar no es necesario pasar ningún dato. Por último, en el return necesitamos transformar el stmt a través de un fetch(```$stmt->fetchAll(PDO::FETCH_ASSOC)```).
+```php
+function list_donantes($connecton){
+    $sql="SELECT * FROM DONANTES";
+    $stmt=$connecton->prepare($sql);
+    $stmt->execute();
+    return $stmt->fetchAll(PDO::FETCH_ASSOC);
+}
+```
+#### UPDATE
+Al igual que en ocasiones anteriores la prapracion del stmt es igual, lo que cambia es la consulta del sql. **Llamar la atención** sobre el orden en el que se indical en la ejecucion del stmt, **debe seguir el orden de las interrogaciones de la consulta**.
+```php
+function update_donante($connection, $id,$nombre,$email){
+    $sql="UPDATE DONANTES SET nombre=?,email=? WHERE id=?";
+    $stmt=$connection->prepare($sql);
+    $stmt-execute([$nombre,$email,$id]);
+}
+```
+#### DELETE
+Continuamos preparando el stmt del mismo modo que una cosulta de select, lo único que cambia es el contenido del sql.
+```php
+function delete_donante($connection,$id){
+    $sql="DELETE FROM DONANTE WHERE id=?";
+    $stmt=$connection->prepare($sql);
+    $stmt->execute([$id]);
+}
+```
+
+
 
 ## Procesado en las páginas
 
@@ -168,10 +197,27 @@ function crear_DB($conexion){
     $sql = "Create database if not exists tienda";
     ejecutar_consulta($conexion, $sql);
 }
+function select_DB($connection){
+    $sql=" USE tienda";
+    $result = execute_query($connection,$sql); 
+    return $result;
+}
 ```
 
 Para crear esta función debemos facilitarle la conexión que hemos creada anteriormente. Una vez dentro crearemos una variable con la consulta deseada y llamaremos a nuestra función para ejecutarla.
 
+### Crear tablas
+Es una creacion estandar de mysql para una tabla dentro de la variable sql y después pasarla a la funcion de ejecución
+```php
+function create_user_table($connection){
+    $sql="CREATE TABLE IF NOT EXISTS USERS(
+    id_user INT (6) auto_increment primary key,
+    ...
+    provincia varchar(50) not null
+    )";
+    execute_query($connection,$sql);
+}
+```
 ### Función ejecutar consultas
 
 ```php
@@ -185,6 +231,48 @@ function ejecutar_consulta($conexion, $sql){
 ```
 Es necesario pasar la consulta y la conexión. Con la conexión ejecutamos el método query, pasandole la consulta. Y para manejar los errores con un of nos aseguramos que el evento es igual a false debemos matar el proceso e imprimir el error.
 
+### CRUD
+Al contrario que en PDO, aqui las consultas devuelven siempre una respuesta. La Preparación de la consulta ($sql) es igual, la diferencia es que en POO nos permite crear una función que se centre en ejecutar cualquier petición CRUD. Por lo que los pasos de preparacion del stmt se substituyen por la llamada a esta función.
+**Alerta**, a la hora de crear el sql debemos entender que no usaremos las consultas preparadas, por ser más complejo de preparar en POO. Para ello ya indicaremos en la sección VALUES la correlación entre datos.
+#### INSERT
+```php
+function register_user($connection,$nombre,$apellido,$edad,$provincia){
+    $sql="INSERT INTO USERS (nombre, apellidos, edad, provincia) VALUES ('$nombre','$apellido', $edad, '$provincia')";
+    $stmt = execute_query($connection,$sql); 
+    return $stmt;
+}
+```
+#### SELECT
+```php
+function get_user($connection, $id_user){
+    $sql="SELECT * FROM USERS WHERE id_user=$id_user";
+    $result = execute_query($connection,$sql); 
+    return $result;
+}
+```
+#### UPDATE
+```php
+function edit_user($connection, $id_user,$nombre,$apellido,$edad,$provincia){
+    $sql="UPDATE USERS SET nombre='$nombre', apellidos='$apellido', edad=$edad, provincia='$provincia' WHERE id_user=$id_user";
+    $result = execute_query($connection,$sql); 
+    return $result;
+}
+```
+#### DELETE
+```php
+function delete_user($connection, $id_user){
+    $sql="DELETE FROM USERS WHERE id_user=$id_user";
+    $result = execute_query($connection,$sql); 
+    return $result;
+}
+```
+### Cerrar conexion
+**Se recomienda** Cerrar la sesión al final de cada consulta.
+```php
+function close_connection($connection){
+    $connection->close();
+}
+```
 ## Procesado en las páginas
 
 ### Creacion en el server
@@ -195,7 +283,7 @@ crear_DB($conexion);
 select_DB($conexion);
 create_user_table($conexion);
 ```
-Parq iniciar la DB en el servidor debemos idicarselo en la primera página que se cargue. Es importante que en las funciones en las que la consulta implica la creación de estructuras, debemos asegurarnos de que especificamos el ```IF NOT EXISTS``` para que no creemos cada vez que iniciamos o nos alerte de error.
+Para iniciar la DB en el servidor debemos idicarselo en la primera página que se cargue. Es importante que en las funciones en las que la consulta implica la creación de estructuras, debemos asegurarnos de que especificamos el ```IF NOT EXISTS``` para que no creemos cada vez que iniciamos o nos alerte de error.
 
 ### Retroalimentación
 
