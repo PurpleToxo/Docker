@@ -8,7 +8,7 @@ function execute_query($connection, $sql){
     return $result;
 }
 
-function connection(){
+function get_conexion(){
     $connection = new mysqli ('db', 'root','test');
     if ($connection->connect_errno != null){
         die("Ha fallao" . $connection->connect_error);
@@ -36,7 +36,7 @@ function create_user_table($connection){
     edad int (3) not null,
     provincia varchar(50) not null
     )";
-    execute_query($sql);
+    execute_query($connection,$sql);
 }
 
 function list_users($connection){
