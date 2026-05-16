@@ -235,7 +235,7 @@ En esta sección el if interior se asegura de recibir (por GET), en caso positiv
 Por último, en el propio formulario en el apartado valor le asignamos el homónimo.
 
 
-# SEGUNDo TRIMESTRE
+# SEGUNDO TRIMESTRE
 ## Sesiones ```$_SESSION```
 ### Iniciar sesión
 Para iniciar una sesión se requiere la sentencia ```session_start();```. En el caso de que existan otras sesiones pero no se les pase, se creará una nueva sesión, si no hay ninguna sesión se accede a la supervariable ```$_SESSION```[^1]. La sintaxis para crear una sesión similar a una variable normal: ```$_SESSION["favcolor"] = "verde";```. Donde es necesario indicar que es una sesión y enter parentesis el nombre que se le asigna a dicha sesión:
@@ -410,73 +410,6 @@ if ($_FILES["fileToUpload"]["size"] > 500000) {
     die("El archivo es demasiado grande."); // Detener el script
 }
 ```
-## PHP Debug
-Para poder usar el Xdebug debemos indicarlo en el Dockerfile
-```
-#Xdebug
-RUN pecl install xdebug-3.3.2
-ADD xdebug.ini /usr/local/etc/php/conf.d/xdebug.ini
-```
-Además de tener un archivo xdebug.ini para establecer unas variables de entorno:
-```
-# docker/php/xdebug.ini
-zend_extension=xdebug
-[xdebug]
-xdebug.mode=develop,debug
-xdebug.start_with_request=yes
-xdebug.client_host='host.docker.internal'
-```
-A mayores tener el archivo launch.json en la carpeta .vscode paraque pueda interpretar de manera correcta las instrucciones del xdebug.
-```php
-{
-    "version": "0.2.0",
-    "configurations": [
-        {
-            "name": "Listen for Xdebug",
-            "type": "php",
-            "request": "launch",
-            "port": 9003,
-            "pathMappings": {
-                "/var/www/html": "${workspaceFolder}/www"
-              }
-        },
-        {
-            "name": "Launch currently open script",
-            "type": "php",
-            "request": "launch",
-            "program": "${file}",
-            "cwd": "${fileDirname}",
-            "port": 0,
-            "runtimeArgs": [
-                "-dxdebug.start_with_request=yes"
-            ],
-            "env": {
-                "XDEBUG_MODE": "debug,develop",
-                "XDEBUG_CONFIG": "client_port=${port}"
-            }
-        },
-        {
-            "name": "Launch Built-in web server",
-            "type": "php",
-            "request": "launch",
-            "runtimeArgs": [
-                "-dxdebug.mode=debug",
-                "-dxdebug.start_with_request=yes",
-                "-S",
-                "localhost:0"
-            ],
-            "program": "",
-            "cwd": "${workspaceRoot}",
-            "port": 9003,
-            "serverReadyAction": {
-                "pattern": "Development Server \\(http://localhost:([0-9]+)\\) started",
-                "uriFormat": "http://localhost:%s",
-                "action": "openExternally"
-            }
-        }
-    ]
-}
-```
 ## Filtrado de datos
 Existen varias formas de filtrado de datos: validacion (EJ para email: ```FILTER_VALIDATE_EMAIL```) o saneamiento (Ej para email: ```FILTER_SANITIZE_EMAIL```). En el primer caso, si la información proporcionada no cumple con lo que se pide no se tomará, en el segundo se eliminan aquellos elementos que no se permitan. en el caso de los arrays se aplica una sintaxis mas compleja:
 ```php
@@ -503,7 +436,7 @@ print_r($result);
 ## Variables de entorno
 Este tipo de variables afectan a dos ficheros docker-compose.yml y .env, y buscan guardar cierto tipo de informacion para que sea igual en todas las construcciones.
 En el docker-compose.yml las variables que se agrupan dentro de "enviroment" se transferirán a .env, donde no precisa ninguna estructura especfífica (un simple corta y pega).
-```
+```yaml
 services:
     www:
         build: .
@@ -525,7 +458,7 @@ services:
             DATABASE_PASSWORD: colegio
 ```
 Siendo sustituido por:
-```
+```yaml
 services:
     www:
         build: .
@@ -682,4 +615,93 @@ class MiExcepcion extends Exception {
         return $this->detalle;
     }
 }
+```
+
+
+
+# TERCER TRIMESTRE
+
+## Flight
+```php
+Flight::route('/saludar', function () {
+    echo 'Hola, bienvenido al módulo de DWCS!';
+});
+```
+Esta orientado a la creación de servicios web, para una mejor comunicación máquina-máquina que el código estándar. Para ello se requiera la importación de la libreria básica de Flight a través de:
+```php
+//Incluimos la librería de flight
+require 'flight/Flight.php';
+
+...
+
+//Iniciamos el servicio 
+Flight::start();
+```
+Se utilizan, practicamente de manera exclusiva, en el conexiones a DB, por lo que hemos de aprender a abrir una DB y a manejarla (GET, POST, PUT y DELETE).
+
+### Abrir conexión
+Para abrirla es tan sencillo como adaptar los mñetodos de PDO y POO a la estructura de Flight. Esta empieza siempre con ```Flight::```, en el caso de qquerer abrir la conexión deberiamos usar el método ```register```. Posteriormente le indicamos el nombre de la DB que queremos abrir (se usará luego como "método" para acceder a la DB), seguido del formato de conexión (PDO o POO) y por ultimo un array con los parámetros necesarios para una conexión PDO.
+```php
+Flight::register('db','PDO',array('mysql:host=db;dbname=agenda','root','test'));
+```
+### Acceso
+En el caso de querer acceder a los datos debemos usar el método ```Flight::route```, e indicarle con GET la acción y la búsqueda (formato ruta). Seguido la función que se encargue de la conexión. Dentro de esta función debemos preparar el steatment indicando la DB (```Flight::db```) y al final para poder mostrar los resultado siempre usar el ```Flight::json(...)```
+```php
+Flight::route('GET /contactos', function(){
+    /*Codigo para recuerar contactos del usuario*/
+    $stmt=Flight::db()->prepare('SELECT * from contactos');
+    $stmt->execute();
+    $contactos=$stmt->fetchAll();
+    Flight::json($contactos);
+});
+```
+En el caso de querer buscar un elemento más específico como un id en concreo, dentro de la función hay que añadir una primera línea.
+```php
+$id=Flight::request()->data->id;
+```
+
+### Insertar
+Al igual que en los otros casos empezamos con ```Flight::route()``` e indicamos que insertamos datos con POST. dentro de la función es donde cambia, con la petición de los datos que queramos guardar a través del método ```request```. El resto es una función estandar de inserción.
+```php
+Flight::route('POST /constactos', function(){
+    /*Codigo para añadir contacto*/ 
+    $nombre=Flight::request()->data->nombre;
+    $telefono=Flight::request()->data->telefono;
+    $email=Flight::request()->data->email;
+    $stmt=Flight::db()->prepare('INSERT INTO contactos(nombre,telefono,email)values(:nombre,:telefono,:email)');
+    $stmt->execute(['nombre'=>$nombre, 'telefono'=>$telefono, 'email'=>$email]);
+});
+```
+
+### Borrar
+Indicamos un ```Flight::route``` y un DELETE con la información. Dentro de la función recuperamos el id con ```Flight::request``` y el resto es la fución estandar de DB para eliminar registos.
+```php
+Flight::route('DELETE /constactos/@id',function(){
+    /**codigo para eliminar usuario */
+    /**Recuperamos el id enviado por el json */
+    $id=Flight::request()->data->id;
+
+    /**Realizamos la peticion sql */
+    $stmt=Flight::db()->prepare('DELETE FROM contactos WHERE id=?');
+    $stmt->bindParam(1, $id);
+    $stmt->execute();
+})
+
+```
+### Actualizar
+Indicamos un ```Flight::route``` y un PUT con la información. Dentro de la función recuperamos los datos con ```Flight::request``` y el resto es la fución estandar de DB para actualizar registros.
+```php
+Flight::rute('PUT /contactos/@id',function(){
+    /*Codigo para actualizar*/
+
+    /**Recuperamos los datos con los que trabajaremos */
+    $id=Flight::request()->data->id;
+    $nombre=Flight::request()->data->nombre;
+    $telefono=Flight::request()->data->telefono;
+    $email=Flight::request()->data->email;
+
+    /**Realizamos la peticion sql */
+    $stmt=Flight::db()->prepare('UPDATE contactos SET nombre=:nombre, telefono=:telefono, email=:email WHERE id=:id');
+    $stmt->execute(['nombre'=>$nombre, 'telefono'=>$telefono, 'email'=>$email, 'id'=>$id]);
+});
 ```
