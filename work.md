@@ -262,74 +262,68 @@ Por último, en el propio formulario, en el apartado valor le asignamos el homó
 # SEGUNDO TRIMESTRE
 ## Sesiones ```$_SESSION```
 ### Iniciar sesión
-Para iniciar una sesión se requiere la sentencia ```session_start();```. En el caso de que existan otras sesiones pero no se les pase, se creará una nueva sesión, si no hay ninguna sesión se accede a la supervariable ```$_SESSION```[^1]. La sintaxis para crear una sesión similar a una variable normal: ```$_SESSION["favcolor"] = "verde";```. Donde es necesario indicar que es una sesión y enter parentesis el nombre que se le asigna a dicha sesión:
+Para iniciar una sesión se requiere la sentencia ```session_start();```. En el caso de que existan otras sesiones pero no se les pase, se creará una nueva sesión, si no hay ninguna sesión se accede a la supervariable ```$_SESSION```. La sintaxis para crear una sesión similar a una variable normal: ```$_SESSION["favcolor"] = "verde";```. Donde es necesario indicar que es una sesión y enter parentesis el nombre que se le asigna a dicha sesión:
 ```php
-<?php
   // Start the session
   session_start();
-?>
-<!DOCTYPE html>
-<html>
-  <body class="<?php echo ($tema=='dark') ? 'bg-dark text-white' : 'bg-light text-dark'; ?>">
-  <?php
-  // Establecer variables de sesión 
-  $_SESSION["favcolor"] = "verde";
-  $_SESSION["favanimal"] = "gato";
-  echo "Variables de sesión establecidas.";
-  ?>
-  </body>
-</html>
+---
+// Establecer variables de sesión 
+$_SESSION["favcolor"] = "verde";
+$_SESSION["favanimal"] = "gato";
+echo "Variables de sesión establecidas.";
 ```
- [^1]: La mayoría de las sesiones configuran una clave de usuario en el navegador del usuario (similar a 765487cf34ert8dede5a562e4f3a7e12). Luego, cuando se abre una sesión en otra página, escanea en busca de una clave de usuario. Si hay una coincidencia, accede a esa sesión, si no, inicia una nueva sesión. 
 ### Obtener sesiones
 A la hora de acceder a la sesión debemos referir al nombre, pero siempre indicando ```$_SESSION```:
 ```php
-<?php
-  session_start();
-?>
-<!DOCTYPE html>
-<html>
-  <body class="<?php echo ($tema=='dark') ? 'bg-dark text-white' : 'bg-light text-dark'; ?>">
-  <?php
-  // Echo session variables that were set on previous page
-  echo "El color favorito es: " . $_SESSION["favcolor"] . ".<br>";
-  echo "El animal favorito es:  " . $_SESSION["favanimal"] . ".";
-  ?>
-  </body>
-</html>
+echo "El color favorito es: " . $_SESSION["favcolor"] . ".<br>";
+echo "El animal favorito es:  " . $_SESSION["favanimal"] . ".";
 ```
 Todas las  sesiones se almacenan en la variable global ```$_SESSION```, por lo que una forma de acceder a todas las variables almacenadas sería:
 ```php
-<?php
   print_r($_SESSION);
-?>
 ```
 Se puede especificar que al obtener la información escojamos el id de la sesión: ```echo 'A sesión actual é: '.session_id();```
+
 ### Modificar/eliminar sesiones
 Para modificar una sesión solo hay que sobreescribirla. En el caso de querer eliminarla la sintaxis es simple ```unset($_SESSION["favcolor"]);```
+
 ### Evitar ataques Session Fixation
 Estos ataques se basan en los cuales es atacante regista una id en el server que luego se la pasa al usuario. Con esto en futuras ocasiones puede utilizar ese id para entrar como si fuera el usuario. Para evitar este tipo de ataques existen tres opciones:
+
 #### Uso de cookies
 En primer lugar podemos usar las cookies para evitar que la id viaje en la URL o en formularios. Para ello guardamos la session en alguna cookie y tendremos que recuperarla, esta situación reduce las posibilidades, pero nunca son cero. Con el siguiente código se hace obligatorio que la id de session solo se use si proviene de una cookie:
 ```php
-<?php
-  ini_set('session.use_only_cookies',1);
-?>
+ini_set('session.use_only_cookies',1);
 ```
 #### Marca de session
-En este caso, una vez que se crea la session, se pregunta si ya fue creada o es nueva. En el caso de que la respues sea no, significa que es nueva o inyectada, por lo que entraría en el if. Dentro del if lo que sucede es:
-- ```session_regenerate_id(true); ``` - En este caso se crea una session nueva con diferente id, y se le pasa la información de la anterior. Buscando que el atacante ya no tenga el mismo id, pero el ususario no note diferencia en su session. Por último, se elimina la session anterior que podía estar coprometida.
-- ```$_SESSION['mimarcadecontrol'] = true;``` - Una vez creada se le añade una marca interna para que en futuras comprobaciones el sistema sepa que fue creada por nosotros de forma legal.
+Para usar una marca de control debemos generarla primero, a la vez que iniciamos sesion creamos esta marca de la siguiente manera:
 ```php
-session_start(); 
-
-if (!isset($_SESSION['mimarcadecontrol'])){ 
-    session_regenerate_id(true); 
-    $_SESSION['mimarcadecontrol'] = true; 
+session_start();
+if (!isset($_SESSION['session_token'])) {
+    $_SESSION['session_token'] = bin2hex(random_bytes(32));
 }
 ```
+Una vez que tengamos esta marca creada debemos entregársela al usuario, para ello podemos usar el propio formulario en el cual se loggea. Esto hará que podamos comparar las claves más adelante. En el caso que alguien pudiese introducir una session exterior no contaría con este campo. Para poder pasar esta clave incluiremos un campo oculto en el formulario:
+```html
+<form action="procesar.php" method="post">
+    <input type="hidden" name="session_token" value="<?php echo htmlspecialchars($_SESSION['session_token']); ?>">
+    <!-- otros campos -->
+</form>
+```
+El trcer paso sería la comprobación de la marca, en ese caso se daría en la pagina que procese el loggeo. Donde con un if deberiamos primero confirmar la existencia de la marca y del envío, para posteriormente compararlos:
+```php
+session_start();
+
+if (!isset($_SESSION['session_token'], $_POST['session_token']) ||
+    !hash_equals($_SESSION['session_token'], $_POST['session_token'])) {
+    // Token inválido: posible intento de session fixation o CSRF
+    die('Sesión no válida. Vuelve a iniciar sesión.');
+}
+```
+Ya para terminar, para invalidar cualquier session exterior debemos regenerar la sesión del usuario una vez logeado, para ello usaremos: ```session_regenerate_id(true)```.
+
 #### Renovar al loggear
-Al loguearse el usuario la session pasa de ser default a tener ciertos privilegios, es ese momento donde debemos cambiar el id de la seesion. Para eso usamos el mismo método que en el caso anterior, pero sin añadir una marca después (no lo vamos a comprobar luego). Otras ocasiones donde sería obligatorio este cambio de id son cambio de rol, activación de permisos especiales y cambio de contraseña.
+La marca es una capa que protege desde el momento del formulario. El caso de la renovacion del id es la capa ultima, la que anula la sesión introducida. Por ello puede usarse sola o en conjunto con la marca. Este método es el que se recomienda usar si o si, en conjunto con los otros.
 ```php
 if ($usuario_logueado === true){
     session_regenerate_id(true);
@@ -369,11 +363,9 @@ Primero se guarda en una variable en la que le indicamos que archivo sobre el qu
 Después se hace un "echo" junto con la función "fread()" (que aplica los parámetros anteriores). Dentro de esta, esta la variable con los parámetros y el archivo.
 Por último, se cierra con la función "fclose()" una vez que se acaba de trabajar con el.
 ```php
-<?php
   $mifichero = fopen("webdictionary.txt", "r") or die("Unable to open file!");
   echo fread($mifichero,filesize("webdictionary.txt"));
   fclose($mifichero);
-?>
 ```
 Los parámetros que se pueden añadir son:
 - r/r+ - Solo de lectura  o lectura/escritura con el cursor al principio.
@@ -384,30 +376,28 @@ Los parámetros que se pueden añadir son:
 - fgetc() - Sirve para leer un solo carácter.
 - feof () - Sirve para comprobar si se llegó al final de documento.
 ```php
-<?php
   $mifichero = fopen("webdictionary.txt", "r") or die("Unable to open file!");
   // Output one line until end-of-file
   while(!feof($mifichero)) {
     echo fgets($mifichero) . "<br>";
   }
   fclose($mifichero);
-?>
 ```
 ### Crear
 Para crear también se utiliza la función ```fopen()``` porque se asume que se abre para escribir o agregar (``` $mifichero = fopen("testfile.txt", "w")```).
 ```php
-<?php
     $mifichero = fopen("nuevoarchivo.txt", "w") or die("Unable to open file!");
     $txt = "Miguel\n";
     fwrite($mifichero, $txt);
     $txt = "Juan\n";
     fwrite($mifichero, $txt);
     fclose($mifichero);
-?>
 ```
-En este código se abre un cocumento (al no existir se crea), con el prametro de escritura y cursor al principio. Seguido de la inclusión de dos nombres. Si se repitiese este código con otros nombres se substituiría lo ya existente, sin embargo cambiando la "w" por "a" se añadirían.
+En este código se abre un documento (al no existir se crea), con el parámetro de escritura y cursor al principio. Seguido de la inclusión de dos nombres. Si se repitiese este código con otros nombres se substituiría lo ya existente, sin embargo cambiando la "w" por "a" se añadirían.
+
 ### Subir archivos
 Para poder subir un archivo es necesario cumplir una serie de requisitos: que el formulario se envíe por método "post", debe tener el atributo ```enctype="multipart/form-data"``` y el input con el atributo ```type = "file"``` debe tener asociado un boton de "examinar" (normalmente los hace automaticamente el navegador).
+
 #### Carga 
 - En la primera línea guardamos en una variable la ruta hasta la carpeta donde guardamos los archivos. Es necesario que exista previamente y que tenga permisos de escritura para que PHP pueda acceder.
 
