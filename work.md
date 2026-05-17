@@ -520,7 +520,6 @@ services:
 ## Login y sesiones
 Para poder tener cierto control sobre los ususrios regostrados usaremos un pequeño formulario para luego comprar con los usuarios que tengamos registrados.
 ```php
-<?php
 session_start();
 function comporbar_usuario($nombre, $pass)
 {
@@ -554,21 +553,19 @@ if($_SERVER["REQUEST_METHOD"]=="POST"){
 ```
 En el caso de querer eliminar la sesión con el fin de cerrarla o cambiarla debemos destruirla
 ```php
-<?php
 	session_start();
 	$_SESSION = array();
 	session_destroy();	
 	header("Location: index.php");
-?>
 ```
 ## Clases y objetos
 ### Clase y objeto
-Los objetos son instancias de una clase, y las clases son estructuras base para la creación de objetos. Esta estructura básica tiene una serie de puntos obligatorios: Para empezar debe declararse como ```class``` y debe ser nombrada en mayuscula. Lo primero que encontramos en la clase son las variables que formarán el objeto (en este casonombre y color), para que no se pueda acceder a estas variables que forman la estructura basica de los ibjetos debemos usar los setters y getters. Estos permiten variar el valor de las variables pero no cambiar las propias variables, es decir, podemos variar el valor de la variable color, pero no eliminar la variable color de la estructura.
+Los objetos son instancias de una clase, y las clases son estructuras base para la creación de objetos. Esta estructura básica tiene una serie de puntos obligatorios: Para empezar debe declararse como ```class``` y debe ser nombrada en mayuscula. Lo primero que encontramos en la clase son las variables que formarán el objeto, para que no se pueda acceder a estas variables debemos usar los setters y getters.
 ```php
 class Fruit {
   // Propiedades
   public $name;
-  public $color;
+  private $color;
   // Métodos
   function setName($name) {
     $this->name = $name;
@@ -579,8 +576,8 @@ class Fruit {
 }
 ```
 Una vez generada la estrucura del objeto debemos crear el objeto, para ello debemos indicarlo ```$banana=new Fruit();``` y luego pasar los valores de ese objeto ```$banana->setName('Banana');```
-El acceso a estas variables se puede limitar tambien a mayores de ls setter y esque podemos generar variables que solo se usen en la propia clase. Estas limitaciones se pueden aplicar tambien a las funcinoes.
-- public: se puede acceder a la propiedad o método desde cualquier lugar. Esta es la opción por defecto.
+El acceso a estas variables se puede limitar tambien a mayores de los setter y es que podemos generar variables que solo se usen en la propia clase. Estas limitaciones se pueden aplicar tambien a las funcinoes.
+- public: se puede acceder a la propiedad o método desde cualquier lugar.
 - protected: se puede acceder a la propiedad o método dentro de la clase y por clases derivadas de esa clase (herencia, por ejemplo).
 - private: Solo se puede acceder a la propiedad o método dentro de la clase.
 #### $this & $instanceof
@@ -593,15 +590,15 @@ El constructor es la función que crea de por si los objetos siguiedo las variab
     $this->name = $name;
   }
   ```
-  En la posición contraria tenemos al destructo, para poder borrar el objeto que no vamos a usar más. Su posición suele ser inmediatamente posterir al constructor.
+  En la posición contraria tenemos al destructor, para poder borrar el objeto que no vamos a usar más. Su posición suele ser inmediatamente posterir al constructor.
   ```php
    function __destruct() {
     echo "The fruit is {$this->name}.";
   }
   ```
 ### Herencia
-Llamamos herencia cuando una clase deriba de una superior (perro puede heredar de la clase animal). Esto también conlleva que las variables, funciones y métodos que se declarasen en la clase superior se pueden usar en la nueva clase. Para indicar que una clase hereda de otra se modifica el enunciado de la clase ```class Dog extends Animal```. Estos métodos heredados se pueden redefinir si nombras a un método de la misma manera.
-DE la misma manera podemos proteger una clase para que no pueda tener clases heredadas, al nombrar una clase con ```final class Animal```. Está podrá heredar de clases superiores pero no podran existir clases por debajo de ella.
+Llamamos herencia cuando una clase deriba de una superior. Esto también conlleva que las variables, funciones y métodos que se declarasen en la clase superior se pueden usar en la nueva clase. Para indicar que una clase hereda de otra se modifica el enunciado de la clase ```class Dog extends Animal```. Estos métodos heredados se pueden redefinir si nombras a un método de la misma manera.
+De la misma manera podemos proteger una clase para que no pueda tener clases heredadas, al nombrar una clase con ```final class Animal```. Está podrá heredar de clases superiores pero no podran existir clases por debajo de ella.
 ### Constantes de clase
 Pos lo mismo que fuera de las clases, pero ahora tienen una sintaxis ligeramente diferente para declarar y para llamarlas.
 ```php
@@ -623,10 +620,9 @@ abstract class ParentClass {
 ```
 En el caso de la clase que hereda debe de redefinir todos los métodos que aparezcan como abstractos, y estos deben tener el mismo modificador de acceso o uno menos restrictivo.
 ## Interfaces & traits
-La interfaz se puede considerar una variable de las clases abstractas. Estas no pueden tener una metodo o función concretos y solo pueden ser públicos. La utilidad de estas limitaciones es que las clases que hereden de ella no se ven restringidas a solo hereder de una interfaz. 
+La interfaz se puede considerar una variable de las clases abstractas. Estas no pueden tener un método o función concretos y solo pueden ser públicos. La utilidad de estas limitaciones es que las clases que hereden de ella no se ven restringidas a solo hereder de una interfaz. 
 En cambio los traits son algo más sencillo, mientras que las interfaces obligan a redefinir los métodos, los traits no es necesario. A cambio tienes que definirlos en el trait. Los traits tambien permiten el uso/herencia de varios de ellos a la vez en una clase secundaria, para indicarle que utilice los traits debemos indicarlo en la primera línea antes de las variables. 
 ```php
-<?php
 class Persona {
     use traitA, traitB, traitC;
     // 🔹 Propiedades
@@ -634,10 +630,66 @@ class Persona {
     private $edad;
     // 🔹 Constructor...
 ```
+Un ejemplo con herencia, interface y triats:
+```php
+interface Identificable {
+    public function getId(): int;
+    public function getNombre(): string;
+}
+trait Saludable {
+    public function respirar(): string {
+        return "Respirando...";
+    }
+    public function dormir(): string {
+        return "Durmiendo...";
+    }
+}
+class Humano {
+    protected $edad;
+
+    public function __construct(int $edad) {
+        $this->edad = $edad;
+    }
+    public function caminar(): string {
+        return "Caminando";
+    }
+    public function getEdad(): int {
+        return $this->edad;
+    }
+}
+class Persona extends Humano implements Identificable {
+    use Saludable;
+
+    private $id;
+    private $nombre;
+
+    public function __construct(int $id, string $nombre, int $edad) {
+        parent::__construct($edad);
+        $this->id = $id;
+        $this->nombre = $nombre;
+    }
+    public function getId(): int {
+        return $this->id;
+    }
+    public function getNombre(): string {
+        return $this->nombre;
+    }
+    public function presentarse(): string {
+        return "Hola, soy " . $this->nombre . " y tengo " . $this->edad . " años.";
+    }
+}
+// Uso
+$persona = new Persona(1, "Lucía", 30);
+
+echo $persona->presentarse();   // Hola, soy Lucía y tengo 30 años.
+echo $persona->caminar();       // Caminando
+echo $persona->respirar();      // Respirando...
+echo $persona->dormir();        // Durmiendo...
+```
 ## Estáticos
 Los métodos estáticos de las clases se indican en la delcaracin del propio método ```public static function saludo()``` se puede acceder a ellos desde cualquier parte, sin tner que crear una instancia ```Saludar::saludo();```. Para poder acceder a ellos desde la propia clase debemos cambiar la sintaxis por un ```self::saludo();```. Se pueden usar estos métodos desde otras clases sin tener que implementer extender o usar nada.
 ## Objetos vacíos
-Es un metodos para crear un objeto si ntener una estructura creada de antemano. Es especialmente utili para enviar información entre sistemas a través de JSON. Es una clase en particular ```stdObject()```
+Es un metodos para crear un objeto sin tener una estructura creada de antemano. Es especialmente útil para enviar información entre sistemas a través de JSON. Es una clase en particular ```stdObject()```
 ```php
 $obj = new stdObject();
 $obj->name = "Nick";
@@ -648,24 +700,40 @@ $obj->address = "Santiago de Compostela. A Coruña";
 ## Errores y excepciones
 Al igual que se vio con anterioridad se pueden manejar las excepciones de dos maneras, generando nosotros la excepcion con el throw y recogiendo las que se originen con una estructura try-catch. Podemos generar las excepciones personalizadas generando una clase pripia que extienda de la clase Exception.
 ```php
-class MiExcepcion extends Exception {
-    // Puedes agregar propiedades adicionales si es necesario
-    private $detalle;
-    // Constructor personalizado
-    public function __construct($mensaje, $codigo = 0, Exception $anterior = null, $detalle = '') {
-        // Llamar al constructor de la clase base
+class DivisionPorCeroException extends Exception {
+    private $valorOriginal;
+
+    public function __construct($mensaje, $valorOriginal, $codigo = 0, Exception $anterior = null) {
+        // Llamar al constructor base
         parent::__construct($mensaje, $codigo, $anterior);
-        // Guardar el detalle adicional
-        $this->detalle = $detalle;
+
+        // Guardar el valor original
+        $this->valorOriginal = $valorOriginal;
     }
-    // Método personalizado para obtener detalles
-    public function obtenerDetalle() {
-        return $this->detalle;
+    // Método para obtener el valor original
+    public function obtenerValorOriginal() {
+        return $this->valorOriginal;
     }
 }
+function inverso($x) {
+    if (!$x) {
+        // Lanzar una excepción personalizada
+        throw new DivisionPorCeroException('Intento de división por cero.', $x);
+    }
+    return 1 / $x;
+}
+try {
+    echo inverso(5) . "\n";
+    echo inverso(0) . "\n"; // Esto lanzará la excepción
+} catch (DivisionPorCeroException $e) {
+    // Capturar la excepción personalizada
+    echo 'Excepción capturada: ', $e->getMessage(), "\n";
+    echo 'Valor original: ', $e->obtenerValorOriginal(), "\n";
+} finally {
+    // Bloque opcional que siempre se ejecuta
+    echo "Finalizando la operación.\n";
+}
 ```
-
-
 
 # TERCER TRIMESTRE
 
