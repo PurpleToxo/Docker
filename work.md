@@ -560,7 +560,7 @@ En el caso de querer eliminar la sesión con el fin de cerrarla o cambiarla debe
 ```
 ## Clases y objetos
 ### Clase y objeto
-Los objetos son instancias de una clase, y las clases son estructuras base para la creación de objetos. Esta estructura básica tiene una serie de puntos obligatorios: Para empezar debe declararse como ```class``` y debe ser nombrada en mayuscula. Lo primero que encontramos en la clase son las variables que formarán el objeto, para que no se pueda acceder a estas variables debemos usar los setters y getters.
+Los objetos son instancias de una clase, y las clases son estructuras base para la creación de objetos. Esta estructura básica tiene una serie de puntos obligatorios: Para empezar debe declararse como ```class``` y debe ser nombrada en mayúscula. Lo primero que encontramos en la clase son las variables que formarán el objeto, seguido de constructor, setters y getters.
 ```php
 class Fruit {
   // Propiedades
@@ -576,16 +576,15 @@ class Fruit {
 }
 ```
 Una vez generada la estrucura del objeto debemos crear el objeto, para ello debemos indicarlo ```$banana=new Fruit();``` y luego pasar los valores de ese objeto ```$banana->setName('Banana');```
-El acceso a estas variables se puede limitar tambien a mayores de los setter y es que podemos generar variables que solo se usen en la propia clase. Estas limitaciones se pueden aplicar tambien a las funcinoes.
+El acceso a estas variables se puede limitar tambien a mayores de los setter y es que podemos generar variables que solo se usen en la propia clase. Estas limitaciones se pueden aplicar también a las funciones.
 - public: se puede acceder a la propiedad o método desde cualquier lugar.
 - protected: se puede acceder a la propiedad o método dentro de la clase y por clases derivadas de esa clase (herencia, por ejemplo).
 - private: Solo se puede acceder a la propiedad o método dentro de la clase.
 #### $this & $instanceof
-```$this``` es usado cuando quieres acceder a una de las variables del propio objeto con el que estas trabajando. ```$this->name=$name```. En el caso de ```("x" instanceof "x")``` se utiliza para comprobar si un elemento es un objeto de una clase. 
+```$this``` es usado cuando quieres acceder a una de las variables del propio objeto con el que estas trabajando. ```$this->name=$name```. En el caso de ```("x" instanceof "x")``` se utiliza para comprobar si un elemento es un objeto de una clase (usado en if).
 ### Constructores y desctructores
-El constructor es la función que crea de por si los objetos siguiedo las variables necesarias. Su posición dentro de la estructura suele ser debajo de la declaración de las variables.
+El constructor es la función que crea de por sí los objetos siguiendo las variables necesarias.
 ```php
-  //Función de constructor al que le pasamos el nombre y lo iguala en el objeto. 
   function __construct($name) {
     $this->name = $name;
   }
@@ -619,17 +618,10 @@ abstract class ParentClass {
 }
 ```
 En el caso de la clase que hereda debe de redefinir todos los métodos que aparezcan como abstractos, y estos deben tener el mismo modificador de acceso o uno menos restrictivo.
+
 ## Interfaces & traits
 La interfaz se puede considerar una variable de las clases abstractas. Estas no pueden tener un método o función concretos y solo pueden ser públicos. La utilidad de estas limitaciones es que las clases que hereden de ella no se ven restringidas a solo hereder de una interfaz. 
 En cambio los traits son algo más sencillo, mientras que las interfaces obligan a redefinir los métodos, los traits no es necesario. A cambio tienes que definirlos en el trait. Los traits tambien permiten el uso/herencia de varios de ellos a la vez en una clase secundaria, para indicarle que utilice los traits debemos indicarlo en la primera línea antes de las variables. 
-```php
-class Persona {
-    use traitA, traitB, traitC;
-    // 🔹 Propiedades
-    private $nombre;
-    private $edad;
-    // 🔹 Constructor...
-```
 Un ejemplo con herencia, interface y triats:
 ```php
 interface Identificable {
@@ -680,14 +672,13 @@ class Persona extends Humano implements Identificable {
 }
 // Uso
 $persona = new Persona(1, "Lucía", 30);
-
 echo $persona->presentarse();   // Hola, soy Lucía y tengo 30 años.
 echo $persona->caminar();       // Caminando
 echo $persona->respirar();      // Respirando...
 echo $persona->dormir();        // Durmiendo...
 ```
 ## Estáticos
-Los métodos estáticos de las clases se indican en la delcaracin del propio método ```public static function saludo()``` se puede acceder a ellos desde cualquier parte, sin tner que crear una instancia ```Saludar::saludo();```. Para poder acceder a ellos desde la propia clase debemos cambiar la sintaxis por un ```self::saludo();```. Se pueden usar estos métodos desde otras clases sin tener que implementer extender o usar nada.
+Los métodos estáticos de las clases se indican en la delcaración del propio método ```public static function saludo()``` se puede acceder a ellos desde cualquier parte, sin tener que crear una instancia ```Saludar::saludo();```. Para poder acceder a ellos desde la propia clase debemos cambiar la sintaxis por un ```self::saludo();```. Se pueden usar estos métodos desde otras clases sin tener que implementer extender o usar nada.
 ## Objetos vacíos
 Es un metodos para crear un objeto sin tener una estructura creada de antemano. Es especialmente útil para enviar información entre sistemas a través de JSON. Es una clase en particular ```stdObject()```
 ```php
@@ -698,7 +689,7 @@ $obj->age = 20;
 $obj->address = "Santiago de Compostela. A Coruña";
 ``` 
 ## Errores y excepciones
-Al igual que se vio con anterioridad se pueden manejar las excepciones de dos maneras, generando nosotros la excepcion con el throw y recogiendo las que se originen con una estructura try-catch. Podemos generar las excepciones personalizadas generando una clase pripia que extienda de la clase Exception.
+Al igual que se vio con anterioridad se pueden manejar las excepciones de dos maneras, generando nosotros la excepción con el throw y recogiendo las que se originen con una estructura try-catch. Podemos generar las excepciones personalizadas generando una clase propia que extienda de la clase Exception.
 ```php
 class DivisionPorCeroException extends Exception {
     private $valorOriginal;
