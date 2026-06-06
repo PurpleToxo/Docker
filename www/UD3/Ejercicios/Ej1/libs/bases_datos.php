@@ -70,66 +70,58 @@ function close_connection($connection){
     $connection->close();
 } */
 
-function executeQuery($conn,$sql){
-    $stmt = $conn->query($sql);
-    if($stmt === false){
-        echo "Error al procesar consulta: " . $conn->error;
+function execute_query($conn, $sql){
+    $result = $conn->query($sql);
+    if ($result==false){
+        die("fallando");
     }
-    return $stmt;
-}
+    return $result;
 
-function getConn(){
-    $conn = new mysqli("db","user","test");
-    if($conn->connect_errno){
-        echo "Error con la conexión: " . $conn->error;
+}
+function getConnection(){
+    $conn = new mysqli ('db','root','test');
+    if ($conn->connect_errno!==0){
+        die ("fallando");
     }
     return $conn;
 }
-
-function create_DB($conn){
-    $sql="CREATE DATABASE IF NOT EXISTS tienda";
-    executeQuery($conn,$sql);
+function create_DB ($conn){
+    $sql = 'CREATE DATABASE IF NOT EXISTS tienda';
+    execute_query($conn,$sql);
 }
 function select_DB($conn){
-    $sql="USE tienda";
-    executeQuery($conn,$sql);
+    $sql = 'USE tienda';
+    execute_query($conn,$sql);
+
 }
-function create_table_users($conn){
+function create_table($conn){
     $sql="CREATE TABLE IF NOT EXISTS users(
-        id_user INT(6) AUTO_INCREMENT PRIMARY KEY,
-        nombre VARCHAR (200) not null,
-        apellidos VARCHAR(200) not null,
-        edad INT (2) not not null,
-        provincia VARCHAR (200) not null
-        )";
-    executeQuery($conn,$sql);
+    id_user INT (6) Primary Key auto_increment,
+    nombre varchar(100) not null,
+    apellidos varchar(200) not null,
+    edad INT (3) not null,
+    provincia varchar(100) not null
+    )";
+    execute_query($conn,$sql);
 }
-function insert_users($conn,$nombre,$apellidos,$edad,$provincia){
-    $sql="INSERT INTO users (nombre,apellidos,edad,provincia) VALUES ('$nombre','$apellidos','$edad','$provincia')";
-    executeQuery($conn,$sql);
-}
-function delete_users($conn,$id){
-    $sql="DELETE FROM users WHERE id=$id";
-    executeQuery($conn,$sql);
-}
-function select_all_users($conn){
+function select ($conn){
     $sql="SELECT * FROM users";
-    $stmt = executeQuery($conn,$sql);
-    return $stmt->fetch_all(MYSQLI_ASSOC);
+    $result = execute_query($conn,$sql);
+    return $result->fetch_all(MYSQLI_ASSOC);
 }
-function select_user($conn,$id){
-    $sql = "SELECT * FROM users WHERE id=$id";
-    $Stmt = executeQuery($conn,$sql);
-    return $stmt->fetch_all(MYSQLI_ASSOC);
+function insert ($conn, $nombre,$apellido,$edad,$provincia){
+    $sql ="INSERT INTO users (nombre,apellido,edad,provincia) VALUES('$nombre','$apellido',$edad,'$provincia')";
+    $result = execute_query($conn,$sql);
+    return $result;
 }
-function upadte_users($conn,$id,$nombre,$apellidos,$edad,$provincia){
-    $sql="UPDATE users SET nombre='$nombre',apellidos='$apellidos',edad='$edad',provincia='$provincia' WHERE id=$id";
-    executeQuery($conn,$sql);
+function delete ($conn,$id){
+    $sql = "DELETE FROM users WHERE id_user=$id";
+    $result = execute_query($conn,$sql);
+    return $result;
 }
-function close_conn($conn){
-    $conn->close();
+function update($conn, $nombre,$apellido,$edad,$provincia, $id){
+    $sql = "UPDATE users SET nombre='$nombre', apellido='$apellido', edad=$edad, provincia='$provincia' WHERE id_user=$id";
+    $result = execute_query($conn,$sql);
+    return $result;
 }
-
-
-
 ?>

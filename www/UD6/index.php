@@ -21,7 +21,6 @@ Flight::route('GET /login', function($email,$password){
 
 
 /**Parte de peticiones a db*/
-
 Flight::register('db','PDO',array('mysql:host=db;dbname=agenda','root','test'));
 
 
