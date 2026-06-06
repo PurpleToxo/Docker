@@ -262,7 +262,7 @@ Por último, en el propio formulario, en el apartado valor le asignamos el homó
 # SEGUNDO TRIMESTRE
 ## Sesiones ```$_SESSION```
 ### Iniciar sesión
-Para iniciar una sesión se requiere la sentencia ```session_start();```. En el caso de que existan otras sesiones pero no se les pase, se creará una nueva sesión, si no hay ninguna sesión se accede a la supervariable ```$_SESSION```. La sintaxis para crear una sesión similar a una variable normal: ```$_SESSION["favcolor"] = "verde";```. Donde es necesario indicar que es una sesión y enter parentesis el nombre que se le asigna a dicha sesión:
+Para iniciar una sesión se requiere la sentencia ```session_start();```. En el caso de que existan otras sesiones pero no se les pase, se creará una nueva sesión, si no hay ninguna sesión se accede a la supervariable ```$_SESSION```. La sintaxis para crear una sesión similar a una variable normal: ```$_SESSION["favcolor"] = "verde";```. Donde es necesario indicar que es una sesión y **entre paréntesis** el nombre que se le asigna a dicha sesión:
 ```php
   // Start the session
   session_start();
@@ -273,7 +273,7 @@ $_SESSION["favanimal"] = "gato";
 echo "Variables de sesión establecidas.";
 ```
 ### Obtener sesiones
-A la hora de acceder a la sesión debemos referir al nombre, pero siempre indicando ```$_SESSION```:
+A la hora de acceder a la sesión debemos referir al nombre **entre corchetes**, pero siempre indicando ```$_SESSION```:
 ```php
 echo "El color favorito es: " . $_SESSION["favcolor"] . ".<br>";
 echo "El animal favorito es:  " . $_SESSION["favanimal"] . ".";
@@ -282,13 +282,12 @@ Todas las  sesiones se almacenan en la variable global ```$_SESSION```, por lo q
 ```php
   print_r($_SESSION);
 ```
-Se puede especificar que al obtener la información escojamos el id de la sesión: ```echo 'A sesión actual é: '.session_id();```
 
 ### Modificar/eliminar sesiones
-Para modificar una sesión solo hay que sobreescribirla. En el caso de querer eliminarla la sintaxis es simple ```unset($_SESSION["favcolor"]);```
+Para modificar una sesión solo hay que sobreescribirla. En el caso de querer eliminarla la sintaxis es simple **```unset($_SESSION["favcolor"]);```**
 
 ### Evitar ataques Session Fixation
-Estos ataques se basan en los cuales es atacante regista una id en el server que luego se la pasa al usuario. Con esto en futuras ocasiones puede utilizar ese id para entrar como si fuera el usuario. Para evitar este tipo de ataques existen tres opciones:
+Estos ataques se basan en los cuales el atacante regista una id en el server y luego se la pasa al usuario. Con esto en futuras ocasiones puede utilizar ese id para entrar como si fuera el usuario. Para evitar este tipo de ataques existen tres opciones:
 
 #### Uso de cookies
 En primer lugar podemos usar las cookies para evitar que la id viaje en la URL o en formularios. Para ello guardamos la session en alguna cookie y tendremos que recuperarla, esta situación reduce las posibilidades, pero nunca son cero. Con el siguiente código se hace obligatorio que la id de session solo se use si proviene de una cookie:
@@ -310,7 +309,7 @@ Una vez que tengamos esta marca creada debemos entregársela al usuario, para el
     <!-- otros campos -->
 </form>
 ```
-El trcer paso sería la comprobación de la marca, en ese caso se daría en la pagina que procese el loggeo. Donde con un if deberiamos primero confirmar la existencia de la marca y del envío, para posteriormente compararlos:
+El tercer paso sería la comprobación de la marca, en ese caso se daría en la página que procese el logeo. Donde con un if deberíamos primero confirmar la existencia de la marca y del envío, para posteriormente compararlos:
 ```php
 session_start();
 

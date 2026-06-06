@@ -1,4 +1,4 @@
-<?php 
+<?php /* 
 
 function getConnection(){
     $servername='db';
@@ -38,8 +38,9 @@ function create_table_donantes($connection){
         grp_sangre varchar (3) not null(check (grp_sangre in ('A+','A-','B+','B-','AB+','AB-','O+','O-'))),
         cod_postal int (5) not null,
         tlf int (9) not null
-        )";
-    executeQuery($connection,$sql);
+    )";
+    $stmt = $connection -> prepare($sql);
+    $stmt -> execute();
 }
 
 function create_table_historico($connection){
@@ -49,16 +50,18 @@ function create_table_historico($connection){
         last_donation date  default current_date,
         next_donation date generate always as (last_donation + interval 4 months) stored,
         foreign key (id_donante) references DONANTES(id)
-        )";
-    executeQuery($connection,$sql);
+    )";
+    $stmt = $connection -> prepare($sql);
+    $stmt -> execute();
 }
 
 function create_table_admin($connection){
     $sql ="CREATE TABLE IF NOT EXISTS ADMIN(
-    name_admin varchar (50) primary key,
-    password_admin varchar(200) not null
+        name_admin varchar (50) primary key,
+        password_admin varchar(200) not null
     )";
-    executeQuery($connection,$sql);
+    $stmt = $connection -> prepare($sql);
+    $stmt -> execute();
 }
 
 
@@ -101,4 +104,72 @@ function search_donante($connection,$id){
     $stmt=$connection->prepare($sql);
     $stmt-execute([$id]);
     return $stmt->fetchAll(PDO::FETCH_ASSOC);
+} */
+
+
+function getConnection(){
+    $servername="dbname";
+    $dbname="donacion";
+    $user="user";
+    $password="test";
+
+    $$conn = new PDO ("mysql:host=$servername;dbname=$dbname", $user,$password);
+    $conn->setAttribute("PDO::ATTR_ERRMODE", "PDO::ERRMODE_EXCEPTION");
+    return $conn;
+}
+
+function create_DB ($conn){
+    $sql="CREATE DATABASE IF NOT EXISTS donaciones";
+    $stmt = $conn->prepare($sql);
+    $stmt->execute();
+}
+
+Function select_DB($conn){
+    $sql="USE donaciones";
+    $stmt=$conn->prepare($sql);
+    $stmt->execute();
+}
+
+function create_table_donantes($conn){
+    $sql="CREATE TABLE IF NOT EXISTS donantes(
+        id INT (6) AUTO_INCREMENT PRIMARY KEY,
+        nombre varchar (200) not null,
+        apellidos varchar (200) not null,
+        email varchar (200) not null,
+        edat INT (2) not null,
+        grp_sangre varchar (3)  not null check (grp_sangre in (A+,'A-','B+','B-','AB+','AB-','O+','O-'))
+        )";
+    $stmt =$conn->prepare($sql);
+    $stmt -> execute();
+}
+function insert_donante($conn,$nombre,$apellidos,$edad,$email,$grp_sangre){
+    $sql="INSERT INTO donantes (nombre,apellidos, email,edad,grp_sangre)VALUES(?,?,?,?,?)";
+    $stmt = $conn->prepare($sql);
+    $stmt -> execute([$nombre,$apellidos,$email,$edad,$grp_sangre]);
+}
+function select_donantes($conn,$id){
+    $sql="SELECT * FROM donantes WHERE id=?;";
+    $stmt = $conn->prepare($sql);
+    $stmt -> execute([$id]);
+    return $stmt->fetchAll(PDO::FETCH_ASSOC);
+}
+function select_all_donantes($conn){
+    $sql="SELECT * FROM donantes";
+    $stmt = $conn->prepare($sql);
+    $stmt->execute();
+    return $stmt->fetchAll(PDO::FETCH_ASSOC);
+}
+function delete_donante($conn,$id){
+    $sql="DELETE FROM donantes WHERE id=?";
+    $stmt = $conn->prepare($sql);
+    $stmt ->execute([$id]);
+}
+
+function update_donante($conn,$id,$nombre,$apellidos,$email,$edad,$grp_sangre){
+    $sql="UPDATE donantes SET nombre=?, apellidos=?, email=?,edad=?, grp_sangre=? WHERE id=?";
+    $stmt = $conn->prepare($sql);
+    $stmt ->execute([$nombre,$apellidos,$email,$edad,$grp_sangre,$id]);
+}
+function close_conn($conn){
+    $conn=null;
 }

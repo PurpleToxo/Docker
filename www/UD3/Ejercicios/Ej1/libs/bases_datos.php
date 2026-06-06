@@ -1,6 +1,6 @@
 <?php
 
-function execute_query($connection, $sql){
+/* function execute_query($connection, $sql){
     $result = $connection->query($sql);
     if($result == false){
         die ("Error al procesar la petición: " . $connection->error);
@@ -68,5 +68,68 @@ function delete_user($connection, $id_user){
 
 function close_connection($connection){
     $connection->close();
+} */
+
+function executeQuery($conn,$sql){
+    $stmt = $conn->query($sql);
+    if($stmt === false){
+        echo "Error al procesar consulta: " . $conn->error;
+    }
+    return $stmt;
 }
+
+function getConn(){
+    $conn = new mysqli("db","user","test");
+    if($conn->connect_errno){
+        echo "Error con la conexión: " . $conn->error;
+    }
+    return $conn;
+}
+
+function create_DB($conn){
+    $sql="CREATE DATABASE IF NOT EXISTS tienda";
+    executeQuery($conn,$sql);
+}
+function select_DB($conn){
+    $sql="USE tienda";
+    executeQuery($conn,$sql);
+}
+function create_table_users($conn){
+    $sql="CREATE TABLE IF NOT EXISTS users(
+        id_user INT(6) AUTO_INCREMENT PRIMARY KEY,
+        nombre VARCHAR (200) not null,
+        apellidos VARCHAR(200) not null,
+        edad INT (2) not not null,
+        provincia VARCHAR (200) not null
+        )";
+    executeQuery($conn,$sql);
+}
+function insert_users($conn,$nombre,$apellidos,$edad,$provincia){
+    $sql="INSERT INTO users (nombre,apellidos,edad,provincia) VALUES ('$nombre','$apellidos','$edad','$provincia')";
+    executeQuery($conn,$sql);
+}
+function delete_users($conn,$id){
+    $sql="DELETE FROM users WHERE id=$id";
+    executeQuery($conn,$sql);
+}
+function select_all_users($conn){
+    $sql="SELECT * FROM users";
+    $stmt = executeQuery($conn,$sql);
+    return $stmt->fetch_all(MYSQLI_ASSOC);
+}
+function select_user($conn,$id){
+    $sql = "SELECT * FROM users WHERE id=$id";
+    $Stmt = executeQuery($conn,$sql);
+    return $stmt->fetch_all(MYSQLI_ASSOC);
+}
+function upadte_users($conn,$id,$nombre,$apellidos,$edad,$provincia){
+    $sql="UPDATE users SET nombre='$nombre',apellidos='$apellidos',edad='$edad',provincia='$provincia' WHERE id=$id";
+    executeQuery($conn,$sql);
+}
+function close_conn($conn){
+    $conn->close();
+}
+
+
+
 ?>

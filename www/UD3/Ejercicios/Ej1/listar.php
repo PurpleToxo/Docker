@@ -25,11 +25,11 @@ include_once("libs/bases_datos.php");
                 </tr>
             </thead>
             <tbody>
-        <?php //insertamos el codigo php responsable de encontrar y gestionar la información de la base de datos
-        $conexion = get_conexion(); //Guardamos en una variable la conexion a la base de datos
-        select_DB($conexion);//Seleccionamos la base de datos con la que vamos a trabajar
+        <?php                        //insertamos el codigo php responsable de encontrar y gestionar la información de la base de datos
+        $conexion = get_conexion();  //Guardamos en una variable la conexion a la base de datos
+        select_DB($conexion);        //Seleccionamos la base de datos con la que vamos a trabajar
         $sql="SELECT *FROM USUARIOS";//Guardamos en una variable la consulta SQL que queremos ejecutar
-        $resultado = $conexion->query($sql);//Guardamos el resultado de aplicar la consulta a la base de datos
+        $resultado = $conexion->query($sql);      //Guardamos el resultado de aplicar la consulta a la base de datos
         if($resultado===false){
             //En caso de que de error en la consulta
             error_log("Error en la consilta: ".$conexion->error);
